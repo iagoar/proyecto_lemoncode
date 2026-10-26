@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Inicia sesión (móvil) — rumbo.</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#2c5af5}a:hover{color:#16181d}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #2c5af5;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #ffffff; font-family: Geist, system-ui, sans-serif; color: #16181d; font-size: 15px; line-height: 24px; display: flex; flex-direction: column; overflow: hidden">
+  <div style="background: #16181d; padding: 56px 24px 28px; display: flex; flex-direction: column; gap: 24px; position: relative; overflow: hidden; flex: none">
+    <div aria-hidden="true" style="position: absolute; right: -24px; top: 32px; display: grid; grid-template-columns: repeat(2, 64px); gap: 10px">
+      <div style="height: 64px; border-radius: 18px; background: #262a33"></div>
+      <div style="height: 64px; border-radius: 18px; background: #3d6bff"></div>
+      <div style="height: 64px; border-radius: 18px; background: #262a33"></div>
+      <div style="height: 64px; border-radius: 18px; background: #c9d6ff"></div>
+    </div>
+    <img src="/_blob/88535d970631bd76bc0413bb0c11a45b" alt="rumbo." style="width: 100px; height: 28px; position: relative">
+    <div style="display: flex; flex-direction: column; gap: 6px; position: relative">
+      <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 32px; line-height: 36px; font-weight: 700; letter-spacing: -0.02em; color: #f2f4f8">Encuentra<br>tu rumbo.</h1>
+      <p style="margin: 0; font-size: 14px; line-height: 20px; color: #a3a9b6">Coaching, bienestar y formación.</p>
+    </div>
+  </div>
+
+  <main style="flex: 1; overflow-y: auto; padding: 24px 24px 32px; display: flex; flex-direction: column; gap: 16px">
+    <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 24px; line-height: 30px; font-weight: 600">Inicia sesión</h2>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="m-email" style="font-size: 14px; line-height: 20px; font-weight: 500">Email</label>
+      <input id="m-email" type="email" placeholder="tu@email.com" style="height: 48px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; font-size: 16px; background: #ffffff; color: #16181d">
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="m-pass" style="font-size: 14px; line-height: 20px; font-weight: 500">Contraseña</label>
+      <input id="m-pass" type="password" placeholder="••••••••" style="height: 48px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; font-size: 16px; background: #ffffff; color: #16181d">
+      <a href="#" style="align-self: flex-end; font-size: 14px; font-weight: 500; min-height: 44px; display: flex; align-items: center">¿Olvidaste tu contraseña?</a>
+    </div>
+    <a href="Movil-Servicios.dc.html" style="height: 52px; border-radius: 10px; background: #2c5af5; color: #ffffff; font-weight: 600; font-size: 16px; text-decoration: none; display: flex; align-items: center; justify-content: center">Entrar</a>
+    <div style="display: flex; align-items: center; gap: 12px; color: #5b6170; font-size: 13px">
+      <div style="flex: 1; height: 1px; background: #dde1e8"></div>o<div style="flex: 1; height: 1px; background: #dde1e8"></div>
+    </div>
+    <button type="button" style="height: 52px; border-radius: 10px; border: 1px solid #8a91a0; background: #ffffff; color: #16181d; font: inherit; font-weight: 500; font-size: 16px; cursor: pointer">Continuar con Google</button>
+    <p style="margin: 0; text-align: center; font-size: 14px; color: #5b6170">¿No tienes cuenta? <a href="#" style="font-weight: 600">Regístrate</a></p>
+    <a href="Movil-Backoffice.dc.html" style="align-self: center; font-size: 13px; color: #5b6170; min-height: 44px; display: flex; align-items: center">Acceso administración</a>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

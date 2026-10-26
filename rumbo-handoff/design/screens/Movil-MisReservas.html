@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Tus reservas (móvil) — rumbo.</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#2c5af5}a:hover{color:#16181d}
+button:focus-visible,a:focus-visible{outline:2px solid #2c5af5;outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; background: #f2f4f8; font-family: Geist, system-ui, sans-serif; color: #16181d; font-size: 15px; line-height: 24px; display: flex; flex-direction: column; overflow: hidden">
+  <header style="flex: none; background: #ffffff; border-bottom: 1px solid #dde1e8; padding: 52px 16px 12px; display: flex; flex-direction: column; gap: 12px">
+    <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 28px; line-height: 34px; font-weight: 700; letter-spacing: -0.01em">Tus reservas</h1>
+    <div role="tablist" aria-label="Estado de reservas" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; background: #f2f4f8; border-radius: 12px">
+      <sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+        <button type="button" role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+      </sc-for>
+    </div>
+  </header>
+
+  <main style="flex: 1; overflow-y: auto; padding: 16px 16px 24px; display: flex; flex-direction: column; gap: 12px">
+    <sc-if value="{{showBanner}}" hint-placeholder-val="{{ true }}">
+      <div role="status" style="background: #ffffff; border: 1px solid #dde1e8; border-radius: 16px; padding: 12px 8px 12px 14px; display: flex; align-items: center; gap: 12px">
+        <span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 10px; background: #157f3d; color: #ffffff; display: flex; align-items: center; justify-content: center; flex: none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+        <span style="flex: 1; font-size: 14px; line-height: 20px"><strong style="font-weight: 600">Reserva confirmada.</strong> Te hemos enviado un email.</span>
+        <button type="button" onClick="{{hideBanner}}" aria-label="Cerrar aviso" style="width: 44px; height: 44px; flex: none; border: 0; border-radius: 10px; background: transparent; color: #5b6170; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isEmpty}}" hint-placeholder-val="{{ false }}">
+      <div style="background: #ffffff; border: 1px dashed #8a91a0; border-radius: 16px; padding: 32px 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+        <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; line-height: 24px; font-weight: 600">{{emptyTitle}}</h2>
+        <p style="margin: 0; color: #5b6170; font-size: 14px; line-height: 20px">{{emptyText}}</p>
+        <a href="Movil-Servicios.dc.html" style="min-height: 48px; padding: 0 18px; border-radius: 10px; background: #2c5af5; color: #ffffff; text-decoration: none; font-weight: 600; display: flex; align-items: center">Explorar servicios</a>
+      </div>
+    </sc-if>
+
+    <sc-for list="{{list}}" as="r" hint-placeholder-count="3">
+      <article style="background: #ffffff; border: 1px solid #dde1e8; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 12px">
+        <div style="display: flex; gap: 14px; align-items: flex-start">
+          <div style="width: 56px; flex: none; border-radius: 12px; overflow: hidden; text-align: center; background: #f2f4f8">
+            <div style="background: #16181d; color: #ffffff; font-family: 'Geist Mono', monospace; font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.08em; padding: 2px 0">{{r.month}}</div>
+            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; line-height: 34px; font-weight: 700">{{r.day}}</div>
+          </div>
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+            <span style="{{r.badge}}">{{r.status}}</span>
+            <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 17px; line-height: 22px; font-weight: 600">{{r.name}}</h2>
+            <p style="margin: 0; font-size: 13px; line-height: 18px; color: #5b6170">{{r.when}} · {{r.mode}}</p>
+          </div>
+        </div>
+        <sc-if value="{{r.upcoming}}" hint-placeholder-val="{{ true }}">
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+            <a href="Movil-Reserva.dc.html" style="min-height: 44px; border: 1px solid #8a91a0; border-radius: 10px; background: #ffffff; color: #16181d; text-decoration: none; font-size: 14px; font-weight: 500; display: flex; align-items: center; justify-content: center">Reprogramar</a>
+            <button type="button" onClick="{{r.ask}}" style="min-height: 44px; border: 1px solid #d92d20; color: #d92d20; border-radius: 10px; background: #ffffff; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer">Cancelar</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{r.past}}" hint-placeholder-val="{{ false }}">
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+            <button type="button" style="min-height: 44px; border: 1px solid #8a91a0; border-radius: 10px; background: #ffffff; color: #16181d; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer">Valorar</button>
+            <a href="Movil-Detalle.dc.html" style="min-height: 44px; border-radius: 10px; background: #2c5af5; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center">Volver a reservar</a>
+          </div>
+        </sc-if>
+      </article>
+    </sc-for>
+  </main>
+
+  <nav aria-label="Principal" style="flex: none; background: #ffffff; border-top: 1px solid #dde1e8; padding: 6px 8px 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr))">
+    <a href="Movil-Servicios.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; color: #5b6170; font-size: 12px; line-height: 16px; font-weight: 500"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>Servicios</a>
+    <a href="Movil-MisReservas.dc.html" aria-current="page" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; color: #2c5af5; font-size: 12px; line-height: 16px; font-weight: 600"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"></path></svg>Mis reservas</a>
+    <a href="#" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; color: #5b6170; font-size: 12px; line-height: 16px; font-weight: 500"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>Perfil</a>
+  </nav>
+
+  <sc-if value="{{asking}}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; background: rgba(22,24,29,0.5); display: flex; flex-direction: column; justify-content: flex-end">
+      <div role="dialog" aria-modal="true" aria-labelledby="m-cancel" style="background: #ffffff; border-radius: 24px 24px 0 0; padding: 12px 20px 32px; display: flex; flex-direction: column; gap: 12px">
+        <div aria-hidden="true" style="align-self: center; width: 40px; height: 4px; border-radius: 9999px; background: #dde1e8"></div>
+        <h2 id="m-cancel" style="margin: 8px 0 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">¿Cancelar «{{askName}}»?</h2>
+        <p style="margin: 0; color: #5b6170">[Política de cancelación: plazo y reembolso.]</p>
+        <button type="button" onClick="{{confirmCancel}}" style="min-height: 52px; border: 0; border-radius: 10px; background: #d92d20; color: #ffffff; font: inherit; font-weight: 600; font-size: 16px; cursor: pointer; margin-top: 8px">Cancelar reserva</button>
+        <button type="button" onClick="{{closeAsk}}" style="min-height: 52px; border: 1px solid #8a91a0; border-radius: 10px; background: #ffffff; color: #16181d; font: inherit; font-weight: 500; font-size: 16px; cursor: pointer">Mantener reserva</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'Próximas', banner: true, cancelled: [], asking: null };
+  }
+  renderVals() {
+    const BADGE = {
+      ok: 'background: #157f3d; color: #ffffff',
+      pend: 'background: #b54708; color: #ffffff',
+      done: 'background: #f2f4f8; color: #16181d',
+      off: 'background: #ffffff; color: #d92d20; border: 1px solid #d92d20'
+    };
+    const badge = (k) => 'align-self: flex-start; display: inline-flex; padding: 0 8px; border-radius: 9999px; font-size: 12px; line-height: 20px; font-weight: 500; ' + BADGE[k];
+    const upcoming = [
+      { id: 'a', name: 'Coaching ejecutivo', month: 'OCT', day: '27', when: 'Mar · 11:30–12:30', mode: 'Online', status: 'Confirmada', kind: 'ok' },
+      { id: 'b', name: 'Hablar en público', month: 'NOV', day: '04', when: 'Mié · 17:30–19:00', mode: 'Presencial', status: 'Pendiente de pago', kind: 'pend' },
+      { id: 'c', name: 'Mindfulness inicial', month: 'NOV', day: '10', when: 'Mar · 09:00–10:00', mode: 'Online', status: 'Confirmada', kind: 'ok' }
+    ];
+    const past = [
+      { id: 'p1', name: 'Coaching de carrera', month: 'OCT', day: '14', when: 'Mié · 10:00–10:45', mode: 'Online', status: 'Completada', kind: 'done' },
+      { id: 'p2', name: 'Asesoría nutricional', month: 'SEP', day: '30', when: 'Mié · 16:00–16:45', mode: 'Presencial', status: 'Completada', kind: 'done' }
+    ];
+    const cx = this.state.cancelled;
+    const live = upcoming.filter((r) => cx.indexOf(r.id) === -1);
+    const gone = upcoming.filter((r) => cx.indexOf(r.id) !== -1).map((r) => ({ ...r, status: 'Cancelada', kind: 'off' }));
+    const tab = this.state.tab;
+    const src = tab === 'Próximas' ? live : tab === 'Pasadas' ? past : gone;
+    const list = src.map((r) => ({ ...r, badge: badge(r.kind), upcoming: tab === 'Próximas', past: tab === 'Pasadas', ask: () => this.setState({ asking: r.id }) }));
+    const tabs = ['Próximas', 'Pasadas', 'Canceladas'].map((label) => {
+      const on = label === tab;
+      return {
+        label,
+        on: on ? 'true' : 'false',
+        pick: () => this.setState({ tab: label }),
+        style: 'min-height: 40px; border: 0; border-radius: 8px; font: inherit; font-size: 14px; cursor: pointer; ' + (on ? 'background: #ffffff; color: #16181d; font-weight: 600; box-shadow: 0 1px 2px rgba(22,24,29,0.08)' : 'background: transparent; color: #5b6170; font-weight: 500')
+      };
+    });
+    const askR = upcoming.find((r) => r.id === this.state.asking);
+    return {
+      tabs,
+      list,
+      isEmpty: list.length === 0,
+      emptyTitle: tab === 'Canceladas' ? 'No tienes reservas canceladas' : tab === 'Pasadas' ? 'Aún no tienes sesiones pasadas' : 'No tienes reservas próximas',
+      emptyText: tab === 'Canceladas' ? 'Cuando canceles una reserva aparecerá aquí.' : 'Elige un servicio y reserva tu primera sesión.',
+      showBanner: this.state.banner && tab === 'Próximas',
+      hideBanner: () => this.setState({ banner: false }),
+      asking: !!askR,
+      askName: askR ? askR.name : '',
+      closeAsk: () => this.setState({ asking: null }),
+      confirmCancel: () => this.setState({ cancelled: cx.concat([this.state.asking]), asking: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

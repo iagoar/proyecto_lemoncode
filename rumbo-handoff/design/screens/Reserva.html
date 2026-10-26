@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Reserva — rumbo.</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#2c5af5}a:hover{color:#16181d}
+input:focus-visible,button:focus-visible,a:focus-visible,textarea:focus-visible{outline:2px solid #2c5af5;outline-offset:2px}
+button:disabled{cursor:not-allowed}
+</style>
+</helmet>
+<div style="min-height: 1120px; background: #f2f4f8; font-family: Geist, system-ui, sans-serif; color: #16181d; font-size: 15px; line-height: 24px">
+  <header style="background: #ffffff; border-bottom: 1px solid #dde1e8">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 14px 24px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+      <div style="display: flex; align-items: center; gap: 32px; flex-wrap: wrap">
+        <a href="Servicios.dc.html" aria-label="rumbo. — inicio" style="display: flex; align-items: center; min-height: 44px"><img src="/_blob/a0ab3f6c53629b5b3f24b55c9fceb08e" alt="rumbo." style="width: 107px; height: 30px"></a>
+        <nav aria-label="Principal" style="display: flex; gap: 4px; flex-wrap: wrap">
+          <a href="Servicios.dc.html" aria-current="page" style="min-height: 40px; padding: 0 14px; border-radius: 10px; background: #ebf0ff; color: #16181d; font-weight: 600; font-size: 14px; text-decoration: none; display: flex; align-items: center">Servicios</a>
+          <a href="MisReservas.dc.html" style="min-height: 40px; padding: 0 14px; border-radius: 10px; color: #5b6170; font-weight: 500; font-size: 14px; text-decoration: none; display: flex; align-items: center">Mis reservas</a>
+        </nav>
+      </div>
+      <button type="button" style="display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 6px 0 4px; border: 0; background: transparent; font: inherit; font-size: 14px; color: #16181d; cursor: pointer">
+        <span aria-hidden="true" style="width: 36px; height: 36px; border-radius: 9999px; background: #16181d; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px">US</span>
+        [Nombre usuario]
+      </button>
+    </div>
+  </header>
+
+  <main style="max-width: 1200px; margin: 0 auto; padding: 24px 24px 56px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px">
+    <a href="Detalle.dc.html" style="align-self: flex-start; min-height: 40px; display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: #5b6170; text-decoration: none">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>Volver al servicio
+    </a>
+
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 36px; line-height: 40px; font-weight: 700; letter-spacing: -0.015em">Reserva: Coaching ejecutivo</h1>
+      <ol aria-label="Pasos de la reserva" style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: 14px; line-height: 20px">
+        <sc-for list="{{steps}}" as="st" hint-placeholder-count="3">
+          <li aria-current="{{st.current}}" style="display: flex; align-items: center; gap: 10px; font-weight: 500">
+            <span style="{{st.dot}}">{{st.mark}}</span>
+            <span style="{{st.labelStyle}}">{{st.label}}</span>
+            <span aria-hidden="true" style="{{st.sep}}"></span>
+          </li>
+        </sc-for>
+      </ol>
+    </div>
+
+    <sc-if value="{{isStep3}}" hint-placeholder-val="{{ false }}">
+      <section aria-labelledby="ok-title" style="align-self: center; width: 100%; max-width: 560px; background: #ffffff; border: 1px solid #dde1e8; border-radius: 24px; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center">
+        <div aria-hidden="true" style="width: 64px; height: 64px; border-radius: 20px; background: #157f3d; color: #ffffff; display: flex; align-items: center; justify-content: center">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <h2 id="ok-title" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 28px; line-height: 34px; font-weight: 600; letter-spacing: -0.01em">¡Reserva confirmada!</h2>
+          <p style="margin: 0; color: #5b6170">Te hemos enviado los detalles y el enlace de la videollamada por email.</p>
+        </div>
+        <dl style="margin: 0; width: 100%; background: #f2f4f8; border-radius: 16px; padding: 20px; box-sizing: border-box; display: grid; grid-template-columns: auto 1fr; gap: 10px 16px; text-align: left">
+          <dt style="color: #5b6170">Servicio</dt><dd style="margin: 0; font-weight: 500; text-align: right">Coaching ejecutivo</dd>
+          <dt style="color: #5b6170">Fecha</dt><dd style="margin: 0; font-weight: 500; text-align: right">{{dayLabel}}</dd>
+          <dt style="color: #5b6170">Hora</dt><dd style="margin: 0; font-weight: 500; text-align: right; font-family: 'Geist Mono', monospace">{{slotLabel}}</dd>
+          <dt style="color: #5b6170">Pago</dt><dd style="margin: 0; font-weight: 500; text-align: right">{{payLabel}}</dd>
+        </dl>
+        <div style="width: 100%; display: flex; gap: 12px; flex-wrap: wrap">
+          <button type="button" style="flex: 1 1 200px; min-height: 48px; border-radius: 10px; border: 1px solid #8a91a0; background: #ffffff; color: #16181d; font: inherit; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"></path></svg>Añadir al calendario
+          </button>
+          <a href="MisReservas.dc.html" style="flex: 1 1 200px; min-height: 48px; border-radius: 10px; background: #2c5af5; color: #ffffff; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center">Ver mis reservas</a>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{notStep3}}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+        <div style="flex: 999 1 560px; min-width: 0">
+          <sc-if value="{{isStep1}}" hint-placeholder-val="{{ true }}">
+            <section aria-labelledby="cal-title" style="background: #ffffff; border: 1px solid #dde1e8; border-radius: 16px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+                <h2 id="cal-title" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Octubre 2026</h2>
+                <div style="display: flex; gap: 8px">
+                  <button type="button" aria-label="Mes anterior" disabled="{{ true }}" style="width: 40px; height: 40px; border: 1px solid #dde1e8; border-radius: 10px; background: #f2f4f8; color: #8a91a0; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+                  <button type="button" aria-label="Mes siguiente" style="width: 40px; height: 40px; border: 1px solid #8a91a0; border-radius: 10px; background: #ffffff; color: #16181d; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></button>
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
+                <sc-for list="{{weekdays}}" as="w" hint-placeholder-count="7">
+                  <div style="text-align: center; font-family: 'Geist Mono', monospace; font-size: 12px; line-height: 16px; font-weight: 500; color: #5b6170; padding-bottom: 6px">{{w}}</div>
+                </sc-for>
+                <sc-for list="{{days}}" as="d" hint-placeholder-count="35">
+                  <button type="button" disabled="{{d.disabled}}" onClick="{{d.pick}}" aria-label="{{d.aria}}" aria-pressed="{{d.pressed}}" style="{{d.style}}">{{d.label}}</button>
+                </sc-for>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 20px; font-size: 13px; line-height: 18px; color: #5b6170">
+                <span style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 14px; height: 14px; border: 1px solid #8a91a0; border-radius: 4px; background: #ffffff"></span>Disponible</span>
+                <span style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 4px; background: #2c5af5"></span>Seleccionado</span>
+                <span style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 4px; background: #f2f4f8; border: 1px solid #dde1e8"></span>No disponible</span>
+              </div>
+              <div style="border-top: 1px solid #dde1e8; padding-top: 20px; display: flex; flex-direction: column; gap: 12px">
+                <h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 17px; line-height: 24px; font-weight: 600">Horas disponibles · {{dayLabel}}</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px">
+                  <sc-for list="{{slots}}" as="s" hint-placeholder-count="8">
+                    <button type="button" disabled="{{s.disabled}}" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="{{s.style}}">{{s.t}}</button>
+                  </sc-for>
+                </div>
+                <p style="margin: 0; font-size: 13px; line-height: 18px; color: #5b6170">Horario en tu zona horaria: Europa/Madrid</p>
+              </div>
+            </section>
+          </sc-if>
+
+          <sc-if value="{{isStep2}}" hint-placeholder-val="{{ false }}">
+            <section aria-labelledby="datos-title" style="background: #ffffff; border: 1px solid #dde1e8; border-radius: 16px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+              <h2 id="datos-title" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Tus datos</h2>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px">
+                <div style="display: flex; flex-direction: column; gap: 6px">
+                  <label for="nombre" style="font-size: 14px; line-height: 20px; font-weight: 500">Nombre y apellidos</label>
+                  <input id="nombre" type="text" value="[Nombre usuario]" style="height: 44px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; background: #ffffff; color: #16181d">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 6px">
+                  <label for="mail" style="font-size: 14px; line-height: 20px; font-weight: 500">Email</label>
+                  <input id="mail" type="email" placeholder="tu@email.com" style="height: 44px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; background: #ffffff; color: #16181d">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 6px">
+                  <label for="tel" style="font-size: 14px; line-height: 20px; font-weight: 500">Teléfono (opcional)</label>
+                  <input id="tel" type="tel" placeholder="+34 600 000 000" style="height: 44px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; background: #ffffff; color: #16181d">
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="notas" style="font-size: 14px; line-height: 20px; font-weight: 500">Notas para el profesional (opcional)</label>
+                <textarea id="notas" rows="3" placeholder="¿Qué te gustaría trabajar?" style="border: 1px solid #8a91a0; border-radius: 10px; padding: 10px 14px; font: inherit; resize: vertical; color: #16181d"></textarea>
+              </div>
+
+              <div style="border-top: 1px solid #dde1e8; padding-top: 20px; display: flex; flex-direction: column; gap: 12px">
+                <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Método de pago</h2>
+                <div role="radiogroup" aria-label="Método de pago" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px">
+                  <sc-for list="{{pays}}" as="p" hint-placeholder-count="2">
+                    <button type="button" role="radio" aria-checked="{{p.checked}}" onClick="{{p.pick}}" style="{{p.style}}">
+                      <span aria-hidden="true" style="{{p.radio}}"></span>
+                      <span style="display: flex; flex-direction: column; gap: 2px; text-align: left"><span style="font-weight: 600">{{p.label}}</span><span style="font-size: 13px; line-height: 18px; color: #5b6170">{{p.hint}}</span></span>
+                    </button>
+                  </sc-for>
+                </div>
+                <sc-if value="{{isCard}}" hint-placeholder-val="{{ true }}">
+                  <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px">
+                    <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+                      <label for="cc" style="font-size: 14px; line-height: 20px; font-weight: 500">Número de tarjeta</label>
+                      <input id="cc" type="text" inputmode="numeric" placeholder="0000 0000 0000 0000" style="height: 44px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; font-family: 'Geist Mono', monospace; background: #ffffff; min-width: 0">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+                      <label for="exp" style="font-size: 14px; line-height: 20px; font-weight: 500">Caducidad</label>
+                      <input id="exp" type="text" placeholder="MM/AA" style="height: 44px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; font-family: 'Geist Mono', monospace; background: #ffffff; min-width: 0">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+                      <label for="cvc" style="font-size: 14px; line-height: 20px; font-weight: 500">CVC</label>
+                      <input id="cvc" type="text" inputmode="numeric" placeholder="123" style="height: 44px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; font-family: 'Geist Mono', monospace; background: #ffffff; min-width: 0">
+                    </div>
+                  </div>
+                  <p style="margin: 0; font-size: 13px; line-height: 18px; color: #5b6170; display: flex; align-items: center; gap: 6px"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Pago seguro gestionado por [pasarela de pago]</p>
+                </sc-if>
+              </div>
+            </section>
+          </sc-if>
+        </div>
+
+        <aside aria-labelledby="res-title" style="flex: 1 1 320px; min-width: 0; background: #ffffff; border: 1px solid #dde1e8; border-radius: 16px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px">
+          <h2 id="res-title" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Resumen</h2>
+          <div style="display: flex; gap: 14px; align-items: center">
+            <div aria-hidden="true" style="width: 56px; height: 56px; border-radius: 12px; background: #c9d6ff; flex: none; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c5af5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 22 2 13 21 11 13 3 11Z"></path></svg></div>
+            <div style="display: flex; flex-direction: column">
+              <span style="font-weight: 600">Coaching ejecutivo</span>
+              <span style="font-size: 14px; line-height: 20px; color: #5b6170">con [Profesional]</span>
+            </div>
+          </div>
+          <dl style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 16px">
+            <dt style="color: #5b6170">Fecha</dt><dd style="margin: 0; font-weight: 500; text-align: right">{{dayLabel}}</dd>
+            <dt style="color: #5b6170">Hora</dt><dd style="margin: 0; font-weight: 500; text-align: right; font-family: 'Geist Mono', monospace">{{slotLabel}}</dd>
+            <dt style="color: #5b6170">Duración</dt><dd style="margin: 0; font-weight: 500; text-align: right">60 min</dd>
+            <dt style="color: #5b6170">Modalidad</dt><dd style="margin: 0; font-weight: 500; text-align: right">Online</dd>
+          </dl>
+          <div style="border-top: 1px solid #dde1e8; padding-top: 14px; display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; font-size: 17px">
+            <span>Total</span><span style="font-family: 'Geist Mono', monospace; font-size: 20px">XX €</span>
+          </div>
+          <sc-if value="{{isStep1}}" hint-placeholder-val="{{ true }}">
+            <button type="button" disabled="{{noSlot}}" onClick="{{toStep2}}" style="{{ctaStyle}}">{{ctaLabel}}</button>
+          </sc-if>
+          <sc-if value="{{isStep2}}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{toStep3}}" style="min-height: 48px; border-radius: 10px; border: 0; background: #2c5af5; color: #ffffff; font: inherit; font-weight: 600; font-size: 16px; cursor: pointer">{{payCta}}</button>
+            <button type="button" onClick="{{toStep1}}" style="min-height: 44px; border-radius: 10px; border: 0; background: transparent; color: #16181d; font: inherit; font-weight: 500; cursor: pointer">Cambiar fecha u hora</button>
+          </sc-if>
+          <p style="margin: 0; font-size: 13px; line-height: 18px; color: #5b6170">[Política de cancelación]</p>
+        </aside>
+      </div>
+    </sc-if>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1120}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 1, day: 27, slot: null, pay: 'tarjeta' };
+  }
+  renderVals() {
+    const P = '#2c5af5';
+    const step = this.state.step;
+    const base = 'height: 48px; border-radius: 10px; font: inherit; font-family: \'Geist Mono\', monospace; font-size: 15px; ';
+    const days = [];
+    for (let i = 0; i < 3; i++) days.push({ label: '', disabled: true, aria: 'vacío', pressed: 'false', pick: null, style: base + 'border: 0; background: transparent; visibility: hidden' });
+    for (let n = 1; n <= 31; n++) {
+      const dow = (n + 2) % 7;
+      const weekend = dow === 5 || dow === 6;
+      const past = n < 27;
+      const full = n === 28;
+      const off = weekend || past || full;
+      const sel = n === this.state.day;
+      let style = base;
+      if (sel) style += 'border: 1px solid ' + P + '; background: ' + P + '; color: #ffffff; font-weight: 600; cursor: pointer';
+      else if (past) style += 'border: 0; background: transparent; color: #8a91a0';
+      else if (off) style += 'border: 1px solid #dde1e8; background: #f2f4f8; color: #5b6170; text-decoration: line-through';
+      else style += 'border: 1px solid #8a91a0; background: #ffffff; color: #16181d; font-weight: 500; cursor: pointer';
+      days.push({ label: String(n), disabled: off, pressed: sel ? 'true' : 'false', aria: n + ' de octubre' + (full ? ', completo' : off ? ', no disponible' : ''), pick: () => this.setState({ day: n, slot: null }), style });
+    }
+    const taken = { 27: ['10:00', '16:00'], 29: ['09:00', '13:00'], 30: ['11:30', '17:30', '19:00'] };
+    const busy = taken[this.state.day] || [];
+    const slots = ['09:00', '10:00', '11:30', '13:00', '16:00', '17:30', '19:00', '20:00'].map((t) => {
+      const dis = busy.indexOf(t) !== -1;
+      const sel = this.state.slot === t;
+      let style = 'min-height: 44px; border-radius: 10px; font: inherit; font-family: \'Geist Mono\', monospace; font-size: 15px; ';
+      if (sel) style += 'border: 1px solid ' + P + '; background: ' + P + '; color: #ffffff; font-weight: 600; cursor: pointer';
+      else if (dis) style += 'border: 1px solid #dde1e8; background: #f2f4f8; color: #5b6170; text-decoration: line-through';
+      else style += 'border: 1px solid #8a91a0; background: #ffffff; color: #16181d; cursor: pointer';
+      return { t, disabled: dis, pressed: sel ? 'true' : 'false', style, pick: () => this.setState({ slot: t }) };
+    });
+    const wd = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+    const dayLabel = wd[(this.state.day + 2) % 7] + ' ' + this.state.day + ' oct';
+    const labels = ['Fecha y hora', 'Datos y pago', 'Confirmación'];
+    const steps = labels.map((label, i) => {
+      const k = i + 1;
+      const done = k < step;
+      const cur = k === step;
+      return {
+        label,
+        mark: done ? '✓' : String(k),
+        current: cur ? 'step' : 'false',
+        dot: 'width: 28px; height: 28px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-family: \'Geist Mono\', monospace; font-size: 13px; font-weight: 600; ' + (cur ? 'background: ' + P + '; color: #ffffff' : done ? 'background: #16181d; color: #ffffff' : 'background: #ffffff; color: #5b6170; border: 1px solid #8a91a0; box-sizing: border-box'),
+        labelStyle: cur || done ? 'color: #16181d; font-weight: 600' : 'color: #5b6170',
+        sep: k < 3 ? 'display: block; width: 40px; height: 1px; background: #8a91a0; margin-left: 2px' : 'display: none'
+      };
+    });
+    const pay = this.state.pay;
+    const pays = [
+      { id: 'tarjeta', label: 'Tarjeta', hint: 'Pagas ahora y queda confirmada' },
+      { id: 'sesion', label: 'Pagar en la sesión', hint: 'Queda pendiente de pago' }
+    ].map((p) => {
+      const on = p.id === pay;
+      return {
+        ...p,
+        checked: on ? 'true' : 'false',
+        pick: () => this.setState({ pay: p.id }),
+        style: 'min-height: 64px; padding: 12px 16px; border-radius: 12px; font: inherit; color: #16181d; cursor: pointer; display: flex; align-items: center; gap: 12px; ' + (on ? 'border: 2px solid ' + P + '; background: #ebf0ff' : 'border: 1px solid #8a91a0; background: #ffffff'),
+        radio: 'width: 18px; height: 18px; border-radius: 9999px; flex: none; box-sizing: border-box; ' + (on ? 'border: 5px solid ' + P + '; background: #ffffff' : 'border: 1px solid #8a91a0; background: #ffffff')
+      };
+    });
+    const hasSlot = !!this.state.slot;
+    return {
+      steps,
+      days,
+      slots,
+      weekdays: ['L', 'M', 'X', 'J', 'V', 'S', 'D'],
+      dayLabel,
+      slotLabel: this.state.slot ? this.state.slot + '–' + (parseInt(this.state.slot, 10) + 1) + this.state.slot.slice(2) : '—',
+      isStep1: step === 1,
+      isStep2: step === 2,
+      isStep3: step === 3,
+      notStep3: step !== 3,
+      noSlot: !hasSlot,
+      ctaLabel: hasSlot ? 'Continuar' : 'Elige una hora para continuar',
+      ctaStyle: 'min-height: 48px; border-radius: 10px; font: inherit; font-weight: 600; font-size: 16px; ' + (hasSlot ? 'border: 0; background: ' + P + '; color: #ffffff; cursor: pointer' : 'border: 1px dashed #8a91a0; background: #f2f4f8; color: #5b6170'),
+      pays,
+      isCard: pay === 'tarjeta',
+      payCta: pay === 'tarjeta' ? 'Pagar XX € y confirmar' : 'Confirmar reserva',
+      payLabel: pay === 'tarjeta' ? 'Pagado con tarjeta' : 'Pendiente · en la sesión',
+      toStep1: () => this.setState({ step: 1 }),
+      toStep2: () => this.setState({ step: 2 }),
+      toStep3: () => this.setState({ step: 3 })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Backoffice · Servicios — rumbo.</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#2c5af5}a:hover{color:#16181d}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #2c5af5;outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; min-height: 1160px; background: #f2f4f8; font-family: Geist, system-ui, sans-serif; color: #16181d; font-size: 15px; line-height: 24px; display: flex; flex-wrap: wrap">
+  <aside style="flex: 1 1 240px; max-width: 100%; background: #ffffff; border-right: 1px solid #dde1e8; padding: 20px 12px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 8px">
+      <img src="/_blob/a0ab3f6c53629b5b3f24b55c9fceb08e" alt="rumbo." style="width: 93px; height: 26px">
+      <span style="background: #16181d; color: #ffffff; border-radius: 6px; padding: 0 8px; font-family: 'Geist Mono', monospace; font-size: 11px; line-height: 20px; font-weight: 600; letter-spacing: 0.08em">ADMIN</span>
+    </div>
+    <nav aria-label="Backoffice" style="display: flex; flex-direction: column; gap: 2px">
+      <a href="Backoffice.dc.html" aria-current="page" style="min-height: 40px; padding: 0 12px; border-radius: 10px; background: #ebf0ff; color: #16181d; text-decoration: none; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2c5af5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>Servicios</a>
+      <a href="#" style="min-height: 40px; padding: 0 12px; border-radius: 10px; color: #5b6170; text-decoration: none; display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 14px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Reservas</a>
+      <a href="#" style="min-height: 40px; padding: 0 12px; border-radius: 10px; color: #5b6170; text-decoration: none; display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 14px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>Profesionales</a>
+      <a href="#" style="min-height: 40px; padding: 0 12px; border-radius: 10px; color: #5b6170; text-decoration: none; display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 14px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Clientes</a>
+      <a href="#" style="min-height: 40px; padding: 0 12px; border-radius: 10px; color: #5b6170; text-decoration: none; display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 14px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"></path></svg>Ajustes</a>
+    </nav>
+    <a href="Main.dc.html" style="margin-top: auto; min-height: 40px; padding: 0 12px; border-radius: 10px; color: #5b6170; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path></svg>Cerrar sesión</a>
+  </aside>
+
+  <main style="flex: 999 1 560px; min-width: 0; padding: 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px">
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 28px; line-height: 34px; font-weight: 700; letter-spacing: -0.01em">Servicios</h1>
+        <p style="margin: 0; color: #5b6170">Crea, edita y publica los servicios del catálogo.</p>
+      </div>
+      <button type="button" onClick="{{newOne}}" style="min-height: 44px; padding: 0 18px; border-radius: 10px; border: 0; background: #2c5af5; color: #ffffff; font: inherit; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>Nuevo servicio</button>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <section aria-label="Listado de servicios" style="flex: 999 1 520px; min-width: 0; background: #ffffff; border: 1px solid #dde1e8; border-radius: 16px; overflow: hidden">
+        <div style="padding: 16px; display: flex; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid #dde1e8">
+          <div style="flex: 1 1 220px; position: relative">
+            <label for="q" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Buscar servicio</label>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5b6170" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 12px; top: 12px"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+            <input id="q" type="search" placeholder="Buscar servicio…" style="width: 100%; box-sizing: border-box; height: 40px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 12px 0 36px; font: inherit; font-size: 14px; color: #16181d">
+          </div>
+          <label for="estado" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Estado</label>
+          <select id="estado" style="flex: 0 1 180px; height: 40px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 10px; font: inherit; font-size: 14px; background: #ffffff; color: #16181d">
+            <option>Todos los estados</option><option>Publicado</option><option>Borrador</option>
+          </select>
+        </div>
+        <div style="overflow-x: auto">
+          <table style="width: 100%; min-width: 620px; border-collapse: collapse; font-size: 14px; line-height: 20px">
+            <thead>
+              <tr style="text-align: left; color: #5b6170">
+                <th style="padding: 12px 16px; font-weight: 500">Nombre</th>
+                <th style="padding: 12px 16px; font-weight: 500">Categoría</th>
+                <th style="padding: 12px 16px; font-weight: 500">Duración</th>
+                <th style="padding: 12px 16px; font-weight: 500">Precio</th>
+                <th style="padding: 12px 16px; font-weight: 500">Estado</th>
+                <th style="padding: 12px 16px; font-weight: 500; text-align: right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{rows}}" as="r" hint-placeholder-count="6">
+                <tr style="{{r.rowStyle}}">
+                  <td style="padding: 10px 16px; font-weight: 600">{{r.name}}</td>
+                  <td style="padding: 10px 16px">{{r.cat}}</td>
+                  <td style="padding: 10px 16px; font-family: 'Geist Mono', monospace">{{r.dur}}</td>
+                  <td style="padding: 10px 16px; font-family: 'Geist Mono', monospace">XX €</td>
+                  <td style="padding: 10px 16px"><span style="{{r.badge}}">{{r.status}}</span></td>
+                  <td style="padding: 6px 16px">
+                    <div style="display: flex; justify-content: flex-end; gap: 4px">
+                      <button type="button" onClick="{{r.edit}}" aria-label="{{r.editLabel}}" style="width: 40px; height: 40px; border: 0; border-radius: 10px; background: transparent; color: #16181d; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path></svg></button>
+                      <button type="button" onClick="{{r.del}}" aria-label="{{r.delLabel}}" style="width: 40px; height: 40px; border: 0; border-radius: 10px; background: transparent; color: #d92d20; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
+                    </div>
+                  </td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid #dde1e8; font-size: 13px; color: #5b6170">
+          <span>Mostrando 1–6 de [N]</span>
+          <div style="display: flex; gap: 6px">
+            <button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #8a91a0; border-radius: 10px; background: #ffffff; color: #16181d; font: inherit; font-size: 13px; cursor: pointer">Anterior</button>
+            <button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #8a91a0; border-radius: 10px; background: #ffffff; color: #16181d; font: inherit; font-size: 13px; cursor: pointer">Siguiente</button>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="form-title" style="flex: 1 1 340px; min-width: 0; background: #ffffff; border: 1px solid #dde1e8; border-radius: 16px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px">
+        <h2 id="form-title" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">{{formTitle}}</h2>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="f-name" style="font-size: 14px; line-height: 20px; font-weight: 500">Nombre</label>
+          <input id="f-name" type="text" value="{{fName}}" placeholder="Ej. Coaching ejecutivo" style="height: 40px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 12px; font: inherit; font-size: 14px; color: #16181d">
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="f-cat" style="font-size: 14px; line-height: 20px; font-weight: 500">Categoría</label>
+          <select id="f-cat" style="height: 40px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 10px; font: inherit; font-size: 14px; background: #ffffff; color: #16181d">
+            <option>{{fCat}}</option><option>Coaching</option><option>Bienestar</option><option>Formación</option>
+          </select>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="f-desc" style="font-size: 14px; line-height: 20px; font-weight: 500">Descripción</label>
+          <textarea id="f-desc" rows="4" placeholder="Qué incluye y para quién es" style="border: 1px solid #8a91a0; border-radius: 10px; padding: 10px 12px; font: inherit; font-size: 14px; resize: vertical; color: #16181d"></textarea>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="f-dur" style="font-size: 14px; line-height: 20px; font-weight: 500">Duración (min)</label>
+            <input id="f-dur" type="number" placeholder="60" style="height: 40px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 12px; font: inherit; font-family: 'Geist Mono', monospace; font-size: 14px; min-width: 0">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="f-price" style="font-size: 14px; line-height: 20px; font-weight: 500">Precio (€)</label>
+            <input id="f-price" type="text" inputmode="decimal" placeholder="0,00" style="height: 40px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 12px; font: inherit; font-family: 'Geist Mono', monospace; font-size: 14px; min-width: 0">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="f-mode" style="font-size: 14px; line-height: 20px; font-weight: 500">Modalidad</label>
+            <select id="f-mode" style="height: 40px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 10px; font: inherit; font-size: 14px; background: #ffffff; color: #16181d; min-width: 0">
+              <option>Online</option><option>Presencial</option>
+            </select>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="f-pro" style="font-size: 14px; line-height: 20px; font-weight: 500">Profesional</label>
+            <select id="f-pro" style="height: 40px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 10px; font: inherit; font-size: 14px; background: #ffffff; color: #16181d; min-width: 0">
+              <option>Seleccionar</option>
+            </select>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 14px; line-height: 20px; font-weight: 500">Imagen</span>
+          <button type="button" style="min-height: 96px; border: 1px dashed #8a91a0; border-radius: 12px; background: #f2f4f8; font: inherit; font-size: 14px; color: #5b6170; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
+            Arrastra una imagen o haz clic para subirla
+          </button>
+        </div>
+        <button type="button" role="switch" aria-checked="{{pubOn}}" onClick="{{togglePub}}" style="min-height: 44px; padding: 0; border: 0; background: transparent; font: inherit; font-size: 14px; color: #16181d; cursor: pointer; display: flex; align-items: center; gap: 12px; text-align: left">
+          <span aria-hidden="true" style="{{switchTrack}}"><span style="{{switchThumb}}"></span></span>
+          Publicado (visible para clientes)
+        </button>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <button type="button" style="flex: 1 1 120px; min-height: 44px; border: 0; border-radius: 10px; background: #2c5af5; color: #ffffff; font: inherit; font-weight: 600; cursor: pointer">Guardar</button>
+          <button type="button" onClick="{{newOne}}" style="flex: 1 1 120px; min-height: 44px; border: 1px solid #8a91a0; border-radius: 10px; background: #ffffff; color: #16181d; font: inherit; font-weight: 500; cursor: pointer">Descartar</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <sc-if value="{{confirming}}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; background: rgba(22,24,29,0.5); display: flex; align-items: flex-start; justify-content: center; padding: 220px 20px 20px; box-sizing: border-box">
+      <div role="dialog" aria-modal="true" aria-labelledby="del-title" style="width: 100%; max-width: 440px; background: #ffffff; border-radius: 16px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 12px 32px -8px rgba(22,24,29,0.18)">
+        <h2 id="del-title" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">¿Eliminar «{{delName}}»?</h2>
+        <p style="margin: 0; color: #5b6170">Se quitará del catálogo. Las reservas ya hechas no se cancelan automáticamente.</p>
+        <div style="display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; padding-top: 8px">
+          <button type="button" onClick="{{closeDel}}" style="min-height: 44px; padding: 0 16px; border: 1px solid #8a91a0; border-radius: 10px; background: #ffffff; color: #16181d; font: inherit; font-weight: 500; cursor: pointer">Cancelar</button>
+          <button type="button" onClick="{{closeDel}}" style="min-height: 44px; padding: 0 16px; border: 0; border-radius: 10px; background: #d92d20; color: #ffffff; font: inherit; font-weight: 600; cursor: pointer">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1160}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { editing: 0, deleting: null, pub: true };
+  }
+  renderVals() {
+    const data = [
+      { name: 'Coaching ejecutivo', cat: 'Coaching', dur: '60 min', pub: true },
+      { name: 'Coaching de carrera', cat: 'Coaching', dur: '45 min', pub: true },
+      { name: 'Hablar en público', cat: 'Formación', dur: '90 min', pub: true },
+      { name: 'Mindfulness inicial', cat: 'Bienestar', dur: '60 min', pub: true },
+      { name: 'Asesoría nutricional', cat: 'Bienestar', dur: '45 min', pub: false },
+      { name: 'Mentoría de producto', cat: 'Formación', dur: '60 min', pub: true }
+    ];
+    const ed = this.state.editing;
+    const rows = data.map((d, i) => ({
+      ...d,
+      status: d.pub ? 'Publicado' : 'Borrador',
+      badge: 'display: inline-flex; padding: 1px 10px; border-radius: 9999px; font-size: 12px; line-height: 20px; font-weight: 500; ' + (d.pub ? 'background: #ebf0ff; color: #16181d' : 'background: #ffffff; color: #5b6170; border: 1px dashed #8a91a0'),
+      rowStyle: 'border-top: 1px solid #dde1e8; ' + (ed === i ? 'background: #f2f4f8; box-shadow: inset 3px 0 0 #2c5af5' : 'background: #ffffff'),
+      editLabel: 'Editar ' + d.name,
+      delLabel: 'Eliminar ' + d.name,
+      edit: () => this.setState({ editing: i, pub: d.pub }),
+      del: () => this.setState({ deleting: i })
+    }));
+    const cur = ed === null ? null : data[ed];
+    const on = this.state.pub;
+    return {
+      rows,
+      formTitle: cur ? 'Editar servicio' : 'Nuevo servicio',
+      fName: cur ? cur.name : '',
+      fCat: cur ? cur.cat : 'Seleccionar',
+      newOne: () => this.setState({ editing: null, pub: false }),
+      pubOn: on ? 'true' : 'false',
+      togglePub: () => this.setState({ pub: !on }),
+      switchTrack: 'width: 40px; height: 24px; border-radius: 9999px; padding: 2px; box-sizing: border-box; flex: none; display: flex; ' + (on ? 'background: #2c5af5; justify-content: flex-end' : 'background: #8a91a0; justify-content: flex-start'),
+      switchThumb: 'width: 20px; height: 20px; border-radius: 9999px; background: #ffffff; box-shadow: 0 1px 2px rgba(22,24,29,0.2)',
+      confirming: this.state.deleting !== null,
+      delName: this.state.deleting !== null ? data[this.state.deleting].name : '',
+      closeDel: () => this.setState({ deleting: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

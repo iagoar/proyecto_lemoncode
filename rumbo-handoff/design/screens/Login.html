@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Inicia sesión — rumbo.</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#2c5af5}a:hover{color:#16181d}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #2c5af5;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 860px; box-sizing: border-box; background: #f2f4f8; font-family: Geist, system-ui, sans-serif; color: #16181d; display: flex; flex-wrap: wrap">
+  <section aria-label="rumbo." style="flex: 1 1 480px; min-height: 360px; background: #16181d; color: #f2f4f8; padding: 48px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 48px; position: relative; overflow: hidden">
+    <img src="/_blob/88535d970631bd76bc0413bb0c11a45b" alt="rumbo." style="width: 125px; height: 35px; position: relative">
+    <div aria-hidden="true" style="position: absolute; right: -40px; top: 120px; display: grid; grid-template-columns: repeat(3, 120px); gap: 16px">
+      <div style="height: 120px; border-radius: 28px; background: #262a33"></div>
+      <div style="height: 120px; border-radius: 28px; background: #3d6bff"></div>
+      <div style="height: 120px; border-radius: 28px; background: #262a33"></div>
+      <div style="height: 120px; border-radius: 28px; background: #262a33"></div>
+      <div style="height: 120px; border-radius: 28px; background: #c9d6ff"></div>
+      <div style="height: 120px; border-radius: 28px; background: #3d6bff"></div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px; max-width: 440px; position: relative">
+      <p style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #a3a9b6">Catálogo de coaching</p>
+      <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 56px; line-height: 60px; font-weight: 700; letter-spacing: -0.02em">Encuentra tu rumbo.</h1>
+      <p style="margin: 0; font-size: 17px; line-height: 26px; color: #a3a9b6">Coaching, bienestar y formación con profesionales verificados. Reserva en minutos.</p>
+    </div>
+  </section>
+
+  <main style="flex: 1 1 480px; display: flex; align-items: center; justify-content: center; padding: 48px 24px; box-sizing: border-box">
+    <div style="width: 100%; max-width: 420px; background: #ffffff; border: 1px solid #dde1e8; border-radius: 16px; padding: 40px 36px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 28px; line-height: 34px; font-weight: 600; letter-spacing: -0.01em">Inicia sesión</h2>
+        <p style="margin: 0; color: #5b6170; font-size: 15px; line-height: 24px">Accede para reservar y gestionar tus sesiones.</p>
+      </div>
+      <button type="button" style="height: 44px; border-radius: 10px; border: 1px solid #8a91a0; background: #ffffff; color: #16181d; font: inherit; font-weight: 500; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; box-shadow: 0 1px 2px rgba(22,24,29,0.05)">
+        Continuar con Google
+      </button>
+      <div style="display: flex; align-items: center; gap: 12px; color: #5b6170; font-size: 13px">
+        <div style="flex: 1; height: 1px; background: #dde1e8"></div>o con tu email<div style="flex: 1; height: 1px; background: #dde1e8"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <label for="email" style="font-size: 14px; font-weight: 500">Email</label>
+        <input id="email" type="email" placeholder="tu@email.com" style="height: 44px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; font-size: 15px; background: #ffffff; color: #16181d; box-shadow: 0 1px 2px rgba(22,24,29,0.05)">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap">
+          <label for="pass" style="font-size: 14px; font-weight: 500">Contraseña</label>
+          <a href="#" style="font-size: 13px; font-weight: 500">¿Olvidaste tu contraseña?</a>
+        </div>
+        <input id="pass" type="password" placeholder="••••••••" style="height: 44px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; font-size: 15px; background: #ffffff; color: #16181d; box-shadow: 0 1px 2px rgba(22,24,29,0.05)">
+      </div>
+      <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; min-height: 44px">
+        <input type="checkbox" style="width: 18px; height: 18px; margin: 0; accent-color: #2c5af5">
+        Recordarme
+      </label>
+      <a href="Servicios.dc.html" style="height: 44px; border-radius: 10px; background: #2c5af5; color: #ffffff; font-weight: 600; font-size: 15px; text-decoration: none; display: flex; align-items: center; justify-content: center">Entrar</a>
+      <p style="margin: 0; text-align: center; font-size: 14px; color: #5b6170">¿No tienes cuenta? <a href="#" style="font-weight: 600">Regístrate</a></p>
+      <a href="Backoffice.dc.html" style="align-self: center; font-size: 13px; color: #5b6170; min-height: 32px; display: flex; align-items: center">Acceso administración</a>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":860}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Reserva (móvil) — rumbo.</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#2c5af5}a:hover{color:#16181d}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #2c5af5;outline-offset:2px}
+button:disabled{cursor:not-allowed}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #f2f4f8; font-family: Geist, system-ui, sans-serif; color: #16181d; font-size: 15px; line-height: 24px; display: flex; flex-direction: column; overflow: hidden">
+  <sc-if value="{{notStep3}}" hint-placeholder-val="{{ true }}">
+    <header style="flex: none; background: #ffffff; border-bottom: 1px solid #dde1e8; padding: 44px 8px 12px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; align-items: center; gap: 4px">
+        <sc-if value="{{isStep1}}" hint-placeholder-val="{{ true }}">
+          <a href="Movil-Detalle.dc.html" aria-label="Volver al servicio" style="width: 44px; height: 44px; border-radius: 10px; color: #16181d; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></a>
+        </sc-if>
+        <sc-if value="{{isStep2}}" hint-placeholder-val="{{ false }}">
+          <button type="button" onClick="{{toStep1}}" aria-label="Volver a fecha y hora" style="width: 44px; height: 44px; border: 0; border-radius: 10px; background: transparent; color: #16181d; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+        </sc-if>
+        <div style="display: flex; flex-direction: column">
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 17px; line-height: 22px; font-weight: 600">Coaching ejecutivo</span>
+          <span style="font-size: 13px; line-height: 18px; color: #5b6170">Paso {{step}} de 3 · {{stepName}}</span>
+        </div>
+      </div>
+      <div role="progressbar" aria-label="Progreso de la reserva" aria-valuemin="1" aria-valuemax="3" aria-valuenow="{{step}}" style="margin: 0 8px; height: 4px; border-radius: 9999px; background: #dde1e8; overflow: hidden"><div style="{{barStyle}}"></div></div>
+    </header>
+  </sc-if>
+
+  <sc-if value="{{isStep1}}" hint-placeholder-val="{{ true }}">
+    <main style="flex: 1; overflow-y: auto; padding: 20px 16px 24px; display: flex; flex-direction: column; gap: 20px">
+      <section aria-labelledby="m-fecha" style="display: flex; flex-direction: column; gap: 12px">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <h2 id="m-fecha" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; line-height: 24px; font-weight: 600">Elige día</h2>
+          <button type="button" style="min-height: 44px; padding: 0 8px; border: 0; background: transparent; color: #2c5af5; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Ver mes</button>
+        </div>
+        <div role="group" aria-label="Días disponibles" style="display: flex; gap: 8px; overflow-x: auto; margin: 0 -16px; padding: 0 16px 4px">
+          <sc-for list="{{days}}" as="d" hint-placeholder-count="6">
+            <button type="button" disabled="{{d.disabled}}" aria-pressed="{{d.pressed}}" aria-label="{{d.aria}}" onClick="{{d.pick}}" style="{{d.style}}">
+              <span style="font-size: 12px; line-height: 16px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em">{{d.wd}}</span>
+              <span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; line-height: 28px; font-weight: 700">{{d.n}}</span>
+              <span style="font-size: 12px; line-height: 16px">{{d.m}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </section>
+      <section aria-labelledby="m-hora" style="display: flex; flex-direction: column; gap: 12px">
+        <h2 id="m-hora" style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; line-height: 24px; font-weight: 600">Horas · {{dayLabel}}</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+          <sc-for list="{{slots}}" as="s" hint-placeholder-count="8">
+            <button type="button" disabled="{{s.disabled}}" aria-pressed="{{s.pressed}}" onClick="{{s.pick}}" style="{{s.style}}">{{s.t}}</button>
+          </sc-for>
+        </div>
+        <p style="margin: 0; font-size: 13px; line-height: 18px; color: #5b6170">Horario en tu zona horaria: Europa/Madrid</p>
+      </section>
+    </main>
+    <div style="flex: none; background: #ffffff; border-top: 1px solid #dde1e8; padding: 12px 16px 28px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 20px">
+        <span style="color: #5b6170">{{dayLabel}} · <span style="font-family: 'Geist Mono', monospace; color: #16181d">{{slotLabel}}</span></span>
+        <span style="font-family: 'Geist Mono', monospace; font-weight: 600">XX €</span>
+      </div>
+      <button type="button" disabled="{{noSlot}}" onClick="{{toStep2}}" style="{{ctaStyle}}">{{ctaLabel}}</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isStep2}}" hint-placeholder-val="{{ false }}">
+    <main style="flex: 1; overflow-y: auto; padding: 20px 16px 24px; display: flex; flex-direction: column; gap: 16px">
+      <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; line-height: 24px; font-weight: 600">Tus datos</h2>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="mm-nombre" style="font-size: 14px; line-height: 20px; font-weight: 500">Nombre y apellidos</label>
+        <input id="mm-nombre" type="text" value="[Nombre usuario]" style="height: 48px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; font-size: 16px; background: #ffffff; color: #16181d">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="mm-mail" style="font-size: 14px; line-height: 20px; font-weight: 500">Email</label>
+        <input id="mm-mail" type="email" placeholder="tu@email.com" style="height: 48px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; font-size: 16px; background: #ffffff; color: #16181d">
+      </div>
+      <h2 style="margin: 8px 0 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; line-height: 24px; font-weight: 600">Método de pago</h2>
+      <div role="radiogroup" aria-label="Método de pago" style="display: flex; flex-direction: column; gap: 8px">
+        <sc-for list="{{pays}}" as="p" hint-placeholder-count="2">
+          <button type="button" role="radio" aria-checked="{{p.checked}}" onClick="{{p.pick}}" style="{{p.style}}">
+            <span aria-hidden="true" style="{{p.radio}}"></span>
+            <span style="display: flex; flex-direction: column; text-align: left"><span style="font-weight: 600">{{p.label}}</span><span style="font-size: 13px; line-height: 18px; color: #5b6170">{{p.hint}}</span></span>
+          </button>
+        </sc-for>
+      </div>
+      <sc-if value="{{isCard}}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <label for="mm-cc" style="font-size: 14px; line-height: 20px; font-weight: 500">Número de tarjeta</label>
+          <input id="mm-cc" type="text" inputmode="numeric" placeholder="0000 0000 0000 0000" style="height: 48px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; font-family: 'Geist Mono', monospace; font-size: 16px; background: #ffffff">
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="mm-exp" style="font-size: 14px; line-height: 20px; font-weight: 500">Caducidad</label>
+            <input id="mm-exp" type="text" placeholder="MM/AA" style="height: 48px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; font-family: 'Geist Mono', monospace; font-size: 16px; background: #ffffff; min-width: 0">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <label for="mm-cvc" style="font-size: 14px; line-height: 20px; font-weight: 500">CVC</label>
+            <input id="mm-cvc" type="text" inputmode="numeric" placeholder="123" style="height: 48px; border: 1px solid #8a91a0; border-radius: 10px; padding: 0 14px; font: inherit; font-family: 'Geist Mono', monospace; font-size: 16px; background: #ffffff; min-width: 0">
+          </div>
+        </div>
+      </sc-if>
+    </main>
+    <div style="flex: none; background: #ffffff; border-top: 1px solid #dde1e8; padding: 12px 16px 28px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 20px">
+        <span style="color: #5b6170">{{dayLabel}} · <span style="font-family: 'Geist Mono', monospace; color: #16181d">{{slotLabel}}</span></span>
+        <span style="font-family: 'Geist Mono', monospace; font-weight: 600">XX €</span>
+      </div>
+      <button type="button" onClick="{{toStep3}}" style="min-height: 52px; border-radius: 10px; border: 0; background: #2c5af5; color: #ffffff; font: inherit; font-weight: 600; font-size: 16px; cursor: pointer">{{payCta}}</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isStep3}}" hint-placeholder-val="{{ false }}">
+    <main style="flex: 1; overflow-y: auto; padding: 96px 24px 24px; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center">
+      <div aria-hidden="true" style="width: 72px; height: 72px; border-radius: 22px; background: #157f3d; color: #ffffff; display: flex; align-items: center; justify-content: center"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 28px; line-height: 34px; font-weight: 700; letter-spacing: -0.01em">¡Reserva confirmada!</h1>
+        <p style="margin: 0; color: #5b6170">Te hemos enviado los detalles y el enlace de la videollamada por email.</p>
+      </div>
+      <dl style="margin: 0; width: 100%; background: #ffffff; border: 1px solid #dde1e8; border-radius: 16px; padding: 16px; box-sizing: border-box; display: grid; grid-template-columns: auto 1fr; gap: 10px 16px; text-align: left">
+        <dt style="color: #5b6170">Servicio</dt><dd style="margin: 0; font-weight: 500; text-align: right">Coaching ejecutivo</dd>
+        <dt style="color: #5b6170">Fecha</dt><dd style="margin: 0; font-weight: 500; text-align: right">{{dayLabel}}</dd>
+        <dt style="color: #5b6170">Hora</dt><dd style="margin: 0; font-weight: 500; text-align: right; font-family: 'Geist Mono', monospace">{{slotLabel}}</dd>
+        <dt style="color: #5b6170">Pago</dt><dd style="margin: 0; font-weight: 500; text-align: right">{{payLabel}}</dd>
+      </dl>
+    </main>
+    <div style="flex: none; padding: 12px 16px 28px; display: flex; flex-direction: column; gap: 8px">
+      <a href="Movil-MisReservas.dc.html" style="min-height: 52px; border-radius: 10px; background: #2c5af5; color: #ffffff; font-weight: 600; font-size: 16px; text-decoration: none; display: flex; align-items: center; justify-content: center">Ver mis reservas</a>
+      <button type="button" style="min-height: 52px; border-radius: 10px; border: 1px solid #8a91a0; background: #ffffff; color: #16181d; font: inherit; font-weight: 600; font-size: 16px; cursor: pointer">Añadir al calendario</button>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 1, day: '27 oct', slot: null, pay: 'tarjeta' };
+  }
+  renderVals() {
+    const P = '#2c5af5';
+    const step = this.state.step;
+    const raw = [
+      { wd: 'mar', n: '27', m: 'oct', full: false },
+      { wd: 'mié', n: '28', m: 'oct', full: true },
+      { wd: 'jue', n: '29', m: 'oct', full: false },
+      { wd: 'vie', n: '30', m: 'oct', full: false },
+      { wd: 'lun', n: '2', m: 'nov', full: false },
+      { wd: 'mar', n: '3', m: 'nov', full: false },
+      { wd: 'mié', n: '4', m: 'nov', full: false },
+      { wd: 'jue', n: '5', m: 'nov', full: false }
+    ];
+    const LONG = { lun: 'lunes', mar: 'martes', 'mié': 'miércoles', jue: 'jueves', vie: 'viernes' };
+    const days = raw.map((d) => {
+      const key = d.n + ' ' + d.m;
+      const sel = key === this.state.day;
+      let style = 'flex: none; width: 64px; min-height: 84px; border-radius: 14px; font: inherit; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; ';
+      if (sel) style += 'border: 1px solid ' + P + '; background: ' + P + '; color: #ffffff; cursor: pointer';
+      else if (d.full) style += 'border: 1px solid #dde1e8; background: #f2f4f8; color: #5b6170; text-decoration: line-through';
+      else style += 'border: 1px solid #8a91a0; background: #ffffff; color: #16181d; cursor: pointer';
+      return { ...d, disabled: d.full, pressed: sel ? 'true' : 'false', aria: LONG[d.wd] + ' ' + d.n + ' de ' + (d.m === 'oct' ? 'octubre' : 'noviembre') + (d.full ? ', completo' : ''), style, pick: () => this.setState({ day: key, slot: null }) };
+    });
+    const cur = raw.find((d) => d.n + ' ' + d.m === this.state.day) || raw[0];
+    const taken = { '27 oct': ['10:00', '16:00'], '29 oct': ['09:00', '13:00'], '30 oct': ['11:30', '17:30', '19:00'] };
+    const busy = taken[this.state.day] || ['13:00'];
+    const slots = ['09:00', '10:00', '11:30', '13:00', '16:00', '17:30', '19:00', '20:00'].map((t) => {
+      const dis = busy.indexOf(t) !== -1;
+      const sel = this.state.slot === t;
+      let style = 'min-height: 48px; border-radius: 10px; font: inherit; font-family: \'Geist Mono\', monospace; font-size: 15px; ';
+      if (sel) style += 'border: 1px solid ' + P + '; background: ' + P + '; color: #ffffff; font-weight: 600; cursor: pointer';
+      else if (dis) style += 'border: 1px solid #dde1e8; background: #f2f4f8; color: #5b6170; text-decoration: line-through';
+      else style += 'border: 1px solid #8a91a0; background: #ffffff; color: #16181d; cursor: pointer';
+      return { t, disabled: dis, pressed: sel ? 'true' : 'false', style, pick: () => this.setState({ slot: t }) };
+    });
+    const pay = this.state.pay;
+    const pays = [
+      { id: 'tarjeta', label: 'Tarjeta', hint: 'Pagas ahora y queda confirmada' },
+      { id: 'sesion', label: 'Pagar en la sesión', hint: 'Queda pendiente de pago' }
+    ].map((p) => {
+      const on = p.id === pay;
+      return {
+        ...p,
+        checked: on ? 'true' : 'false',
+        pick: () => this.setState({ pay: p.id }),
+        style: 'min-height: 64px; padding: 12px 14px; border-radius: 12px; font: inherit; color: #16181d; cursor: pointer; display: flex; align-items: center; gap: 12px; ' + (on ? 'border: 2px solid ' + P + '; background: #ebf0ff' : 'border: 1px solid #8a91a0; background: #ffffff'),
+        radio: 'width: 18px; height: 18px; border-radius: 9999px; flex: none; box-sizing: border-box; ' + (on ? 'border: 5px solid ' + P + '; background: #ffffff' : 'border: 1px solid #8a91a0; background: #ffffff')
+      };
+    });
+    const hasSlot = !!this.state.slot;
+    return {
+      step,
+      stepName: ['Fecha y hora', 'Datos y pago', 'Confirmación'][step - 1],
+      barStyle: 'height: 100%; border-radius: 9999px; background: ' + P + '; width: ' + Math.round(step / 3 * 100) + '%',
+      days,
+      slots,
+      dayLabel: LONG[cur.wd] + ' ' + cur.n + ' ' + cur.m,
+      slotLabel: this.state.slot || '—',
+      isStep1: step === 1,
+      isStep2: step === 2,
+      isStep3: step === 3,
+      notStep3: step !== 3,
+      noSlot: !hasSlot,
+      ctaLabel: hasSlot ? 'Continuar' : 'Elige una hora',
+      ctaStyle: 'min-height: 52px; border-radius: 10px; font: inherit; font-weight: 600; font-size: 16px; ' + (hasSlot ? 'border: 0; background: ' + P + '; color: #ffffff; cursor: pointer' : 'border: 1px dashed #8a91a0; background: #f2f4f8; color: #5b6170'),
+      pays,
+      isCard: pay === 'tarjeta',
+      payCta: pay === 'tarjeta' ? 'Pagar XX € y confirmar' : 'Confirmar reserva',
+      payLabel: pay === 'tarjeta' ? 'Pagado con tarjeta' : 'Pendiente · en la sesión',
+      toStep1: () => this.setState({ step: 1 }),
+      toStep2: () => this.setState({ step: 2 }),
+      toStep3: () => this.setState({ step: 3 })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+/* rumbo. — Tailwind v4 + shadcn/ui theme (Vite)
+   Reemplaza src/index.css por este archivo DESPUÉS de `npx shadcn@latest init`.
+   Fuentes: Space Grotesk, Geist y Geist Mono cargadas desde Google Fonts en index.html. */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0.75rem;
+
+  /* Marca (fijos en ambos temas) */
+  --brand-ink: #16181d;
+  --brand-blue: #3d6bff;
+  --brand-mist: #f2f4f8;
+  --brand-blue-100: #c9d6ff;
+
+  --canvas: #f2f4f8;
+  --background: #ffffff;
+  --foreground: #16181d;
+  --card: #ffffff;
+  --card-foreground: #16181d;
+  --popover: #ffffff;
+  --popover-foreground: #16181d;
+  --primary: #2c5af5;
+  --primary-foreground: #ffffff;
+  --secondary: #f2f4f8;
+  --secondary-foreground: #16181d;
+  --muted: #f2f4f8;
+  --muted-foreground: #5b6170;
+  --accent: #ebf0ff;
+  --accent-foreground: #16181d;
+  --destructive: #d92d20;
+  --destructive-foreground: #ffffff;
+  --success: #157f3d;
+  --success-foreground: #ffffff;
+  --warning: #b54708;
+  --warning-foreground: #ffffff;
+  --border: #dde1e8;
+  --input: #8a91a0;
+  --ring: #2c5af5;
+  --chart-1: #3d6bff;
+  --chart-2: #16181d;
+  --chart-3: #c9d6ff;
+  --chart-4: #e8833a;
+  --chart-5: #8a91a0;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #16181d;
+  --sidebar-primary: #2c5af5;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ebf0ff;
+  --sidebar-accent-foreground: #16181d;
+  --sidebar-border: #dde1e8;
+  --sidebar-ring: #2c5af5;
+}
+
+.dark {
+  --canvas: #101216;
+  --background: #16181d;
+  --foreground: #f2f4f8;
+  --card: #1d2027;
+  --card-foreground: #f2f4f8;
+  --popover: #1d2027;
+  --popover-foreground: #f2f4f8;
+  --primary: #7c9bff;
+  --primary-foreground: #16181d;
+  --secondary: #262a33;
+  --secondary-foreground: #f2f4f8;
+  --muted: #262a33;
+  --muted-foreground: #a3a9b6;
+  --accent: #252b3d;
+  --accent-foreground: #f2f4f8;
+  --destructive: #f97066;
+  --destructive-foreground: #16181d;
+  --success: #47cd89;
+  --success-foreground: #16181d;
+  --warning: #fdb022;
+  --warning-foreground: #16181d;
+  --border: #2c313b;
+  --input: #646b7a;
+  --ring: #7c9bff;
+  --chart-1: #7c9bff;
+  --chart-2: #f2f4f8;
+  --chart-3: #3a4a7a;
+  --chart-4: #f5a35c;
+  --chart-5: #646b7a;
+  --sidebar: #16181d;
+  --sidebar-foreground: #f2f4f8;
+  --sidebar-primary: #7c9bff;
+  --sidebar-primary-foreground: #16181d;
+  --sidebar-accent: #252b3d;
+  --sidebar-accent-foreground: #f2f4f8;
+  --sidebar-border: #2c313b;
+  --sidebar-ring: #7c9bff;
+}
+
+@theme inline {
+  /* Tipografía */
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Radios (shadcn) */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 12px);
+
+  /* Colores → utilidades bg-*, text-*, border-* */
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-mist: var(--brand-mist);
+  --color-brand-blue-100: var(--brand-blue-100);
+  --color-canvas: var(--canvas);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@theme {
+  /* Sombras: marca plana, solo lo que flota */
+  --shadow-xs: 0 1px 2px 0 rgb(22 24 29 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(22 24 29 / 0.08), 0 1px 2px -1px rgb(22 24 29 / 0.06);
+  --shadow-lg: 0 12px 32px -8px rgb(22 24 29 / 0.18);
+
+  /* Tipos de la marca: text-display, text-h1… */
+  --text-display: 3.5rem;
+  --text-display--line-height: 3.75rem;
+  --text-display--letter-spacing: -0.02em;
+  --text-h1: 2.25rem;
+  --text-h1--line-height: 2.5rem;
+  --text-h1--letter-spacing: -0.015em;
+  --text-h2: 1.75rem;
+  --text-h2--line-height: 2.125rem;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.75rem;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1rem;
+  --text-eyebrow--letter-spacing: 0.12em;
+  --text-body-lg: 1.0625rem;
+  --text-body-lg--line-height: 1.625rem;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.5rem;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.125rem;
+
+  /* Layout */
+  --container-page: 1200px;
+  --container-narrow: 960px;
+  --container-form: 420px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-canvas text-foreground font-sans text-body antialiased;
+  }
+  h1, h2, h3, .font-display {
+    @apply font-display;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
