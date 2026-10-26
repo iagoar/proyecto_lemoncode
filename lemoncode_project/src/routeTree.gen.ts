@@ -10,33 +10,120 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ClienteRouteImport } from './routes/_cliente'
+import { Route as KitRouteImport } from './routes/[_]kit'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ProximamenteRouteImport } from './routes/proximamente'
+import { Route as ClienteReservasRouteImport } from './routes/_cliente/reservas'
+import { Route as ClienteServiciosIndexRouteImport } from './routes/_cliente/servicios/index'
+import { Route as ClienteServiciosSlugRouteImport } from './routes/_cliente/servicios/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClienteRoute = ClienteRouteImport.update({
+  id: '/_cliente',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KitRoute = KitRouteImport.update({
+  id: '/_kit',
+  path: '/_kit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProximamenteRoute = ProximamenteRouteImport.update({
+  id: '/proximamente',
+  path: '/proximamente',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClienteReservasRoute = ClienteReservasRouteImport.update({
+  id: '/reservas',
+  path: '/reservas',
+  getParentRoute: () => ClienteRoute,
+} as any)
+const ClienteServiciosIndexRoute = ClienteServiciosIndexRouteImport.update({
+  id: '/servicios/',
+  path: '/servicios/',
+  getParentRoute: () => ClienteRoute,
+} as any)
+const ClienteServiciosSlugRoute = ClienteServiciosSlugRouteImport.update({
+  id: '/servicios/$slug',
+  path: '/servicios/$slug',
+  getParentRoute: () => ClienteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/_kit': typeof KitRoute
+  '/login': typeof LoginRoute
+  '/proximamente': typeof ProximamenteRoute
+  '/reservas': typeof ClienteReservasRoute
+  '/servicios/$slug': typeof ClienteServiciosSlugRoute
+  '/servicios/': typeof ClienteServiciosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/_kit': typeof KitRoute
+  '/login': typeof LoginRoute
+  '/proximamente': typeof ProximamenteRoute
+  '/reservas': typeof ClienteReservasRoute
+  '/servicios/$slug': typeof ClienteServiciosSlugRoute
+  '/servicios': typeof ClienteServiciosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_cliente': typeof ClienteRouteWithChildren
+  '/_kit': typeof KitRoute
+  '/login': typeof LoginRoute
+  '/proximamente': typeof ProximamenteRoute
+  '/_cliente/reservas': typeof ClienteReservasRoute
+  '/_cliente/servicios/$slug': typeof ClienteServiciosSlugRoute
+  '/_cliente/servicios/': typeof ClienteServiciosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/_kit'
+    | '/login'
+    | '/proximamente'
+    | '/reservas'
+    | '/servicios/$slug'
+    | '/servicios/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/_kit'
+    | '/login'
+    | '/proximamente'
+    | '/reservas'
+    | '/servicios/$slug'
+    | '/servicios'
+  id:
+    | '__root__'
+    | '/'
+    | '/_cliente'
+    | '/_kit'
+    | '/login'
+    | '/proximamente'
+    | '/_cliente/reservas'
+    | '/_cliente/servicios/$slug'
+    | '/_cliente/servicios/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ClienteRoute: typeof ClienteRouteWithChildren
+  KitRoute: typeof KitRoute
+  LoginRoute: typeof LoginRoute
+  ProximamenteRoute: typeof ProximamenteRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,12 +135,89 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_cliente': {
+      id: '/_cliente'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ClienteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_kit': {
+      id: '/_kit'
+      path: '/_kit'
+      fullPath: '/_kit'
+      preLoaderRoute: typeof KitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proximamente': {
+      id: '/proximamente'
+      path: '/proximamente'
+      fullPath: '/proximamente'
+      preLoaderRoute: typeof ProximamenteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_cliente/reservas': {
+      id: '/_cliente/reservas'
+      path: '/reservas'
+      fullPath: '/reservas'
+      preLoaderRoute: typeof ClienteReservasRouteImport
+      parentRoute: typeof ClienteRoute
+    }
+    '/_cliente/servicios/': {
+      id: '/_cliente/servicios/'
+      path: '/servicios'
+      fullPath: '/servicios/'
+      preLoaderRoute: typeof ClienteServiciosIndexRouteImport
+      parentRoute: typeof ClienteRoute
+    }
+    '/_cliente/servicios/$slug': {
+      id: '/_cliente/servicios/$slug'
+      path: '/servicios/$slug'
+      fullPath: '/servicios/$slug'
+      preLoaderRoute: typeof ClienteServiciosSlugRouteImport
+      parentRoute: typeof ClienteRoute
+    }
   }
 }
 
+interface ClienteRouteChildren {
+  ClienteReservasRoute: typeof ClienteReservasRoute
+  ClienteServiciosSlugRoute: typeof ClienteServiciosSlugRoute
+  ClienteServiciosIndexRoute: typeof ClienteServiciosIndexRoute
+}
+
+const ClienteRouteChildren: ClienteRouteChildren = {
+  ClienteReservasRoute: ClienteReservasRoute,
+  ClienteServiciosSlugRoute: ClienteServiciosSlugRoute,
+  ClienteServiciosIndexRoute: ClienteServiciosIndexRoute,
+}
+
+const ClienteRouteWithChildren =
+  ClienteRoute._addFileChildren(ClienteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ClienteRoute: ClienteRouteWithChildren,
+  KitRoute: KitRoute,
+  LoginRoute: LoginRoute,
+  ProximamenteRoute: ProximamenteRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
