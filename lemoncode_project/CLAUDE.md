@@ -6,7 +6,10 @@ Front-end del catálogo de servicios rumbo.: **TanStack Start** (React 19 + Type
 
 ## Comandos
 
-- `npm run dev` — servidor de desarrollo (puerto 3000)
+- `npm run dev:all` — json-server (puerto 3001) y la app (puerto 3000) a la vez
+- `npm run dev` — solo la app (puerto 3000); necesita `npm run api` en otra terminal
+- `npm run api` — json-server sobre `db/db.json` (lo crea desde `db/seed.json` si no existe)
+- `npm run api:reset` — vuelve a los datos de ejemplo (`db/seed.json` → `db/db.json`)
 - `npm run build` — build de producción
 - `npm run typecheck` — `tsc --noEmit`
 - `npm run generate-routes` — regenera `src/routeTree.gen.ts` (también lo hace el dev server)
@@ -45,7 +48,11 @@ Ejecuta `typecheck` antes de dar una tarea por terminada.
 
 ## Datos
 
-- Las pantallas solo hablan con `src/lib/api/*` vía TanStack Query; nunca importan el seed directamente.
+- Backend: **json-server 0.17** (`db/db.json`, ignorado en git; la semilla versionada es `db/seed.json`). URL en `VITE_API_URL` (por defecto `http://localhost:3001`, ver `.env.example`).
+- Colecciones: `services`, `professionals`, `reviews`, `users`, `bookings`. Relaciones por `<recurso>Id` (`_expand=professional`). Borrar un servicio borra en cascada sus reservas y opiniones (comportamiento de json-server).
+- Las pantallas solo hablan con `src/lib/api/*` vía TanStack Query; las peticiones pasan por `src/lib/api/http.ts`. La disponibilidad, la búsqueda sin tildes y la paginación del catálogo se calculan en `src/lib/api` con los datos del servidor.
+- Para entrar hace falta cuenta: `users` guarda la contraseña en texto plano (`password`, ver `src/lib/api/auth.ts`). Usuarios de ejemplo: `admin@rumbo.es` / `admin1234`, `lucia.fernandez@gmail.com` / `lucia1234` y un profesional por ficha (`laura.gomez@rumbo.es` / `laura1234`, `daniel.ortega@…`, `marta.ruiz@…`, `javier.sanz@…`).
+- Roles: `cliente`; `profesional` (usa el layout de cliente con "Mis servicios" en `/mis-servicios` y su ficha en `/perfil`; su usuario lleva `professionalId`, y `src/lib/api/services.ts` le restringe a sus servicios); `admin` (backoffice `/admin`, todo el catálogo). La gestión de servicios de ambos es `src/features/admin/ServicesManager.tsx`. La sesión vive en el navegador (`getSession`, síncrono para las guardas). Es una simulación: json-server expone `/users` sin protección.
 - Fechas y precios se formatean con `src/lib/format.ts` (`Intl`, date-fns `es`, Europe/Madrid).
 
 ## Diseño de referencia

@@ -1,0 +1,262 @@
+{
+  "professionals": [
+    {
+      "id": "pro-1",
+      "name": "Laura Gómez",
+      "title": "Coach ejecutiva certificada (ICF PCC)",
+      "bio": "Más de 12 años acompañando a equipos directivos en procesos de cambio."
+    },
+    {
+      "id": "pro-2",
+      "name": "Daniel Ortega",
+      "title": "Formador en comunicación y oratoria",
+      "bio": "Ha preparado a cientos de profesionales para hablar en público con seguridad."
+    },
+    {
+      "id": "pro-3",
+      "name": "Marta Ruiz",
+      "title": "Instructora de mindfulness y dietista-nutricionista",
+      "bio": "Combina hábitos saludables y atención plena para cambios sostenibles."
+    },
+    {
+      "id": "pro-4",
+      "name": "Javier Sanz",
+      "title": "Product lead y mentor",
+      "bio": "Ha liderado producto en startups y empresas de más de 500 personas."
+    }
+  ],
+  "services": [
+    {
+      "id": "srv-1",
+      "slug": "coaching-ejecutivo",
+      "name": "Coaching ejecutivo",
+      "category": "coaching",
+      "mode": "online",
+      "durationMin": 60,
+      "priceCents": 6500,
+      "professionalId": "pro-1",
+      "summary": "Liderazgo, decisiones y gestión de equipos.",
+      "description": "Sesiones individuales para trabajar tu estilo de liderazgo, tomar decisiones con más claridad y gestionar equipos en momentos de cambio.",
+      "includes": [
+        "Sesión individual por videollamada",
+        "Plan de acción tras cada sesión",
+        "Seguimiento por email entre sesiones"
+      ],
+      "published": true
+    },
+    {
+      "id": "srv-2",
+      "slug": "coaching-de-carrera",
+      "name": "Coaching de carrera",
+      "category": "coaching",
+      "mode": "online",
+      "durationMin": 45,
+      "priceCents": 5000,
+      "professionalId": "pro-1",
+      "summary": "Cambio de rol, búsqueda de empleo y marca personal.",
+      "description": "Define tu siguiente paso profesional, prepara entrevistas y mejora cómo te presentas en tu sector.",
+      "includes": [
+        "Revisión de CV y LinkedIn",
+        "Simulación de entrevista"
+      ],
+      "published": true
+    },
+    {
+      "id": "srv-3",
+      "slug": "hablar-en-publico",
+      "name": "Hablar en público",
+      "category": "formacion",
+      "mode": "presencial",
+      "durationMin": 90,
+      "priceCents": 8000,
+      "professionalId": "pro-2",
+      "summary": "Estructura, voz y gestión de nervios.",
+      "description": "Taller práctico para estructurar tus presentaciones, trabajar la voz y ganar confianza delante de cualquier audiencia.",
+      "includes": [
+        "Grabación y análisis de tu intervención",
+        "Guía de estructura"
+      ],
+      "published": true
+    },
+    {
+      "id": "srv-4",
+      "slug": "mindfulness-inicial",
+      "name": "Mindfulness inicial",
+      "category": "bienestar",
+      "mode": "online",
+      "durationMin": 60,
+      "priceCents": 4000,
+      "professionalId": "pro-3",
+      "summary": "Primeros pasos en atención plena.",
+      "description": "Aprende técnicas sencillas de atención plena para reducir el estrés y mejorar tu concentración en el día a día.",
+      "includes": [
+        "Prácticas guiadas",
+        "Audios para practicar en casa"
+      ],
+      "published": true
+    },
+    {
+      "id": "srv-5",
+      "slug": "asesoria-nutricional",
+      "name": "Asesoría nutricional",
+      "category": "bienestar",
+      "mode": "presencial",
+      "durationMin": 45,
+      "priceCents": 5500,
+      "professionalId": "pro-3",
+      "summary": "Hábitos y planificación de comidas.",
+      "description": "Revisamos tus hábitos y diseñamos una planificación de comidas realista y adaptada a tu ritmo.",
+      "includes": [
+        "Valoración inicial",
+        "Plan semanal de comidas"
+      ],
+      "published": false
+    },
+    {
+      "id": "srv-6",
+      "slug": "mentoria-de-producto",
+      "name": "Mentoría de producto",
+      "category": "formacion",
+      "mode": "online",
+      "durationMin": 60,
+      "priceCents": 7000,
+      "professionalId": "pro-4",
+      "summary": "Discovery, roadmap y priorización.",
+      "description": "Mentoría para product managers: discovery con usuarios, construcción de roadmap y priorización con criterio.",
+      "includes": [
+        "Revisión de tu roadmap",
+        "Plantillas de discovery"
+      ],
+      "published": true
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-1",
+      "serviceId": "srv-1",
+      "author": "Carmen L.",
+      "rating": 5,
+      "text": "Me ayudó a ordenar prioridades y a delegar mejor en mi equipo.",
+      "date": "2026-10-14"
+    },
+    {
+      "id": "rev-2",
+      "serviceId": "srv-1",
+      "author": "Andrés P.",
+      "rating": 5,
+      "text": "Sesiones muy prácticas. Salgo siempre con tareas claras.",
+      "date": "2026-09-30"
+    },
+    {
+      "id": "rev-3",
+      "serviceId": "srv-1",
+      "author": "Lucía M.",
+      "rating": 4,
+      "text": "Muy buena escucha. Me habría gustado algo más de material de apoyo.",
+      "date": "2026-09-02"
+    },
+    {
+      "id": "rev-4",
+      "serviceId": "srv-2",
+      "author": "Sergio T.",
+      "rating": 5,
+      "text": "Preparamos dos entrevistas y conseguí el puesto.",
+      "date": "2026-10-08"
+    },
+    {
+      "id": "rev-5",
+      "serviceId": "srv-2",
+      "author": "Nuria G.",
+      "rating": 4,
+      "text": "La revisión del LinkedIn fue muy útil.",
+      "date": "2026-08-21"
+    },
+    {
+      "id": "rev-6",
+      "serviceId": "srv-3",
+      "author": "Pablo R.",
+      "rating": 5,
+      "text": "Verme grabado fue duro, pero es lo que más me ha servido.",
+      "date": "2026-10-01"
+    },
+    {
+      "id": "rev-7",
+      "serviceId": "srv-3",
+      "author": "Elena V.",
+      "rating": 4,
+      "text": "Taller dinámico y con mucha práctica.",
+      "date": "2026-09-12"
+    },
+    {
+      "id": "rev-8",
+      "serviceId": "srv-4",
+      "author": "Raúl D.",
+      "rating": 5,
+      "text": "Duermo mejor desde que practico los audios por la noche.",
+      "date": "2026-10-19"
+    },
+    {
+      "id": "rev-9",
+      "serviceId": "srv-5",
+      "author": "Isabel F.",
+      "rating": 4,
+      "text": "Un plan realista que puedo seguir entre semana.",
+      "date": "2026-10-05"
+    }
+  ],
+  "users": [
+    {
+      "id": "usr-admin",
+      "name": "Admin Rumbo",
+      "email": "admin@rumbo.es",
+      "role": "admin",
+      "createdAt": "2025-01-10",
+      "password": "admin1234"
+    },
+    {
+      "id": "usr-lucia",
+      "name": "Lucía Fernández",
+      "email": "lucia.fernandez@gmail.com",
+      "role": "cliente",
+      "createdAt": "2025-03-14",
+      "password": "lucia1234"
+    },
+    {
+      "id": "usr-pro-1",
+      "name": "Laura Gómez",
+      "email": "laura.gomez@rumbo.es",
+      "role": "profesional",
+      "professionalId": "pro-1",
+      "createdAt": "2025-01-10",
+      "password": "laura1234"
+    },
+    {
+      "id": "usr-pro-2",
+      "name": "Daniel Ortega",
+      "email": "daniel.ortega@rumbo.es",
+      "role": "profesional",
+      "professionalId": "pro-2",
+      "createdAt": "2025-01-10",
+      "password": "daniel1234"
+    },
+    {
+      "id": "usr-pro-3",
+      "name": "Marta Ruiz",
+      "email": "marta.ruiz@rumbo.es",
+      "role": "profesional",
+      "professionalId": "pro-3",
+      "createdAt": "2025-01-10",
+      "password": "marta1234"
+    },
+    {
+      "id": "usr-pro-4",
+      "name": "Javier Sanz",
+      "email": "javier.sanz@rumbo.es",
+      "role": "profesional",
+      "professionalId": "pro-4",
+      "createdAt": "2025-01-10",
+      "password": "javier1234"
+    }
+  ],
+  "bookings": []
+}

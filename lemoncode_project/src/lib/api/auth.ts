@@ -1,10 +1,23 @@
-import { delay, readJson, writeJson } from './storage'
-import type { User } from './types'
+import { nowInMadrid } from '#/lib/dates'
+import { http } from './http'
+import { readJson, writeJson } from './storage'
+import type { ProfileInput, User } from './types'
 
-// Auth mock (HANDOFF §3): cualquier email entra como cliente; `admin@…` entra como admin.
-// "Recordarme" guarda la sesión en localStorage; si no, en sessionStorage.
+// Auth sobre json-server. Los usuarios viven en `/users` con su contraseña
+// en texto plano (`password`), que nunca sale de este módulo.
+// Para entrar hace falta una cuenta: un email desconocido o una contraseña
+// incorrecta dan InvalidCredentialsError (mismo error, para no revelar qué
+// emails existen). Al registrarse, `admin@…` queda como admin; el rol se
+// guarda en el servidor, así que también se puede cambiar en db.json.
+// Es una simulación: json-server no protege nada.
+// La sesión es local: "Recordarme" la guarda en localStorage; si no, en sessionStorage.
 
-const SESSION_KEY = 'rumbo-session'
+// v3: invalida las sesiones abiertas antes de que se pidiera contraseña.
+const SESSION_KEY = 'rumbo-session-v3'
+
+function normalizeEmail(email: string) {
+  return email.trim().toLowerCase()
+}
 
 function nameFromEmail(email: string) {
   return email
@@ -13,6 +26,30 @@ function nameFromEmail(email: string) {
     .filter(Boolean)
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(' ')
+}
+
+type UserRecord = User & { password?: string }
+
+/** Quita la contraseña antes de que el usuario llegue a la sesión o a las pantallas. */
+function toUser({ password: _password, ...user }: UserRecord): User {
+  return user
+}
+
+async function findByEmail(email: string) {
+  const [user] = await http.get<UserRecord[]>('/users', { email })
+  return user ?? null
+}
+
+async function createUser(email: string, password?: string, name?: string) {
+  const user = await http.post<UserRecord>('/users', {
+    id: `usr-${Date.now().toString(36)}`,
+    name: name?.trim() || nameFromEmail(email) || email,
+    email,
+    role: email.startsWith('admin@') ? 'admin' : 'cliente',
+    createdAt: nowInMadrid().date,
+    password,
+  } satisfies UserRecord)
+  return toUser(user)
 }
 
 function saveSession(user: User, remember: boolean) {
@@ -29,37 +66,89 @@ export function getSession(): User | null {
   )
 }
 
-async function login(email: string, _password: string, remember = true) {
-  const normalized = email.trim().toLowerCase()
-  const user: User = {
-    id: `usr-${normalized}`,
-    name: nameFromEmail(normalized) || normalized,
-    email: normalized,
-    role: normalized.startsWith('admin@') ? 'admin' : 'cliente',
+export class InvalidCredentialsError extends Error {
+  constructor() {
+    super('El email o la contraseña no son correctos')
   }
-  saveSession(user, remember)
-  return delay(user)
 }
 
-async function loginWithGoogle() {
-  const user: User = {
-    id: 'usr-google-demo',
-    name: 'Lucía Fernández',
-    email: 'lucia.fernandez@gmail.com',
-    role: 'cliente',
+async function login(email: string, password: string, remember = true) {
+  const normalized = normalizeEmail(email)
+  const record = await findByEmail(normalized)
+  if (!record?.password || record.password !== password) {
+    throw new InvalidCredentialsError()
+  }
+  const user = toUser(record)
+  saveSession(user, remember)
+  return user
+}
+
+export class EmailTakenError extends Error {
+  constructor() {
+    super('Ya existe una cuenta con ese email')
+  }
+}
+
+async function register(name: string, email: string, password: string) {
+  const normalized = normalizeEmail(email)
+  const existing = await findByEmail(normalized)
+  if (existing?.password) throw new EmailTakenError()
+
+  let user: User
+  if (existing) {
+    // Cuenta creada antes de que se pidiera contraseña: la completa.
+    user = toUser(
+      await http.patch<UserRecord>(
+        `/users/${encodeURIComponent(existing.id)}`,
+        {
+          name: name.trim() || existing.name,
+          password,
+        },
+      ),
+    )
+  } else {
+    user = await createUser(normalized, password, name)
   }
   saveSession(user, true)
-  return delay(user)
+  return user
 }
 
 async function logout() {
   localStorage.removeItem(SESSION_KEY)
   sessionStorage.removeItem(SESSION_KEY)
-  return delay(undefined, 50, 100)
 }
 
 async function me() {
-  return delay(getSession(), 50, 100)
+  return getSession()
+}
+
+async function updateProfile(input: ProfileInput): Promise<User> {
+  const current = getSession()
+  if (!current) throw new Error('Tu sesión ha caducado. Vuelve a entrar.')
+  const user = toUser(
+    await http.patch<UserRecord>(`/users/${encodeURIComponent(current.id)}`, {
+      name: input.name.trim(),
+      phone: input.phone?.trim() || null,
+    }),
+  )
+  // El nombre de un profesional también es el de su ficha pública.
+  if (user.role === 'profesional' && user.professionalId) {
+    await http.patch(
+      `/professionals/${encodeURIComponent(user.professionalId)}`,
+      {
+        name: user.name,
+      },
+    )
+  }
+  // Mantiene la sesión donde estaba ("Recordarme" o solo esta pestaña).
+  const remember = readJson<User>(localStorage, SESSION_KEY) !== null
+  saveSession(user, remember)
+  return user
+}
+
+/** Admin y profesionales entran al backoffice. */
+export function isBackofficeUser(user: User) {
+  return user.role === 'admin' || user.role === 'profesional'
 }
 
 export function initials(name: string) {
@@ -67,4 +156,10 @@ export function initials(name: string) {
   return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase()
 }
 
-export const auth = { login, loginWithGoogle, logout, me }
+export const auth = {
+  login,
+  register,
+  logout,
+  me,
+  updateProfile,
+}

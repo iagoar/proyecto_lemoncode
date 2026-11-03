@@ -19,6 +19,9 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "font-medium hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // CTA aún no disponible (p. ej. "Elige una hora para continuar")
+        pending:
+          "border border-dashed border-input bg-secondary text-muted-foreground disabled:opacity-100",
       },
       size: {
         sm: "h-10 px-3.5 text-sm has-[>svg]:px-3",

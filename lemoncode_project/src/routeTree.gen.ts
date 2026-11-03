@@ -10,17 +10,29 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as ClienteRouteImport } from './routes/_cliente'
 import { Route as KitRouteImport } from './routes/[_]kit'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProximamenteRouteImport } from './routes/proximamente'
+import { Route as ClienteMisServiciosRouteImport } from './routes/_cliente/mis-servicios'
+import { Route as ClientePerfilRouteImport } from './routes/_cliente/perfil'
 import { Route as ClienteReservasRouteImport } from './routes/_cliente/reservas'
+import { Route as AdminAdminIndexRouteImport } from './routes/_admin/admin/index'
+import { Route as AdminAdminSeccionRouteImport } from './routes/_admin/admin/$seccion'
+import { Route as AdminAdminPerfilRouteImport } from './routes/_admin/admin/perfil'
+import { Route as AdminAdminServiciosRouteImport } from './routes/_admin/admin/servicios'
+import { Route as ClienteReservarSlugRouteImport } from './routes/_cliente/reservar/$slug'
 import { Route as ClienteServiciosIndexRouteImport } from './routes/_cliente/servicios/index'
 import { Route as ClienteServiciosSlugRouteImport } from './routes/_cliente/servicios/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/_admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClienteRoute = ClienteRouteImport.update({
@@ -42,9 +54,44 @@ const ProximamenteRoute = ProximamenteRouteImport.update({
   path: '/proximamente',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClienteMisServiciosRoute = ClienteMisServiciosRouteImport.update({
+  id: '/mis-servicios',
+  path: '/mis-servicios',
+  getParentRoute: () => ClienteRoute,
+} as any)
+const ClientePerfilRoute = ClientePerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => ClienteRoute,
+} as any)
 const ClienteReservasRoute = ClienteReservasRouteImport.update({
   id: '/reservas',
   path: '/reservas',
+  getParentRoute: () => ClienteRoute,
+} as any)
+const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminSeccionRoute = AdminAdminSeccionRouteImport.update({
+  id: '/admin/$seccion',
+  path: '/admin/$seccion',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminPerfilRoute = AdminAdminPerfilRouteImport.update({
+  id: '/admin/perfil',
+  path: '/admin/perfil',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminServiciosRoute = AdminAdminServiciosRouteImport.update({
+  id: '/admin/servicios',
+  path: '/admin/servicios',
+  getParentRoute: () => AdminRoute,
+} as any)
+const ClienteReservarSlugRoute = ClienteReservarSlugRouteImport.update({
+  id: '/reservar/$slug',
+  path: '/reservar/$slug',
   getParentRoute: () => ClienteRoute,
 } as any)
 const ClienteServiciosIndexRoute = ClienteServiciosIndexRouteImport.update({
@@ -63,8 +110,15 @@ export interface FileRoutesByFullPath {
   '/_kit': typeof KitRoute
   '/login': typeof LoginRoute
   '/proximamente': typeof ProximamenteRoute
+  '/mis-servicios': typeof ClienteMisServiciosRoute
+  '/perfil': typeof ClientePerfilRoute
   '/reservas': typeof ClienteReservasRoute
+  '/admin/$seccion': typeof AdminAdminSeccionRoute
+  '/admin/perfil': typeof AdminAdminPerfilRoute
+  '/admin/servicios': typeof AdminAdminServiciosRoute
+  '/reservar/$slug': typeof ClienteReservarSlugRoute
   '/servicios/$slug': typeof ClienteServiciosSlugRoute
+  '/admin/': typeof AdminAdminIndexRoute
   '/servicios/': typeof ClienteServiciosIndexRoute
 }
 export interface FileRoutesByTo {
@@ -72,19 +126,34 @@ export interface FileRoutesByTo {
   '/_kit': typeof KitRoute
   '/login': typeof LoginRoute
   '/proximamente': typeof ProximamenteRoute
+  '/mis-servicios': typeof ClienteMisServiciosRoute
+  '/perfil': typeof ClientePerfilRoute
   '/reservas': typeof ClienteReservasRoute
+  '/admin/$seccion': typeof AdminAdminSeccionRoute
+  '/admin/perfil': typeof AdminAdminPerfilRoute
+  '/admin/servicios': typeof AdminAdminServiciosRoute
+  '/reservar/$slug': typeof ClienteReservarSlugRoute
   '/servicios/$slug': typeof ClienteServiciosSlugRoute
+  '/admin': typeof AdminAdminIndexRoute
   '/servicios': typeof ClienteServiciosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_admin': typeof AdminRouteWithChildren
   '/_cliente': typeof ClienteRouteWithChildren
   '/_kit': typeof KitRoute
   '/login': typeof LoginRoute
   '/proximamente': typeof ProximamenteRoute
+  '/_cliente/mis-servicios': typeof ClienteMisServiciosRoute
+  '/_cliente/perfil': typeof ClientePerfilRoute
   '/_cliente/reservas': typeof ClienteReservasRoute
+  '/_admin/admin/$seccion': typeof AdminAdminSeccionRoute
+  '/_admin/admin/perfil': typeof AdminAdminPerfilRoute
+  '/_admin/admin/servicios': typeof AdminAdminServiciosRoute
+  '/_cliente/reservar/$slug': typeof ClienteReservarSlugRoute
   '/_cliente/servicios/$slug': typeof ClienteServiciosSlugRoute
+  '/_admin/admin/': typeof AdminAdminIndexRoute
   '/_cliente/servicios/': typeof ClienteServiciosIndexRoute
 }
 export interface FileRouteTypes {
@@ -94,8 +163,15 @@ export interface FileRouteTypes {
     | '/_kit'
     | '/login'
     | '/proximamente'
+    | '/mis-servicios'
+    | '/perfil'
     | '/reservas'
+    | '/admin/$seccion'
+    | '/admin/perfil'
+    | '/admin/servicios'
+    | '/reservar/$slug'
     | '/servicios/$slug'
+    | '/admin/'
     | '/servicios/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -103,23 +179,39 @@ export interface FileRouteTypes {
     | '/_kit'
     | '/login'
     | '/proximamente'
+    | '/mis-servicios'
+    | '/perfil'
     | '/reservas'
+    | '/admin/$seccion'
+    | '/admin/perfil'
+    | '/admin/servicios'
+    | '/reservar/$slug'
     | '/servicios/$slug'
+    | '/admin'
     | '/servicios'
   id:
     | '__root__'
     | '/'
+    | '/_admin'
     | '/_cliente'
     | '/_kit'
     | '/login'
     | '/proximamente'
+    | '/_cliente/mis-servicios'
+    | '/_cliente/perfil'
     | '/_cliente/reservas'
+    | '/_admin/admin/$seccion'
+    | '/_admin/admin/perfil'
+    | '/_admin/admin/servicios'
+    | '/_cliente/reservar/$slug'
     | '/_cliente/servicios/$slug'
+    | '/_admin/admin/'
     | '/_cliente/servicios/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   ClienteRoute: typeof ClienteRouteWithChildren
   KitRoute: typeof KitRoute
   LoginRoute: typeof LoginRoute
@@ -133,6 +225,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_cliente': {
@@ -163,11 +262,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProximamenteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_cliente/mis-servicios': {
+      id: '/_cliente/mis-servicios'
+      path: '/mis-servicios'
+      fullPath: '/mis-servicios'
+      preLoaderRoute: typeof ClienteMisServiciosRouteImport
+      parentRoute: typeof ClienteRoute
+    }
+    '/_cliente/perfil': {
+      id: '/_cliente/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof ClientePerfilRouteImport
+      parentRoute: typeof ClienteRoute
+    }
     '/_cliente/reservas': {
       id: '/_cliente/reservas'
       path: '/reservas'
       fullPath: '/reservas'
       preLoaderRoute: typeof ClienteReservasRouteImport
+      parentRoute: typeof ClienteRoute
+    }
+    '/_admin/admin/': {
+      id: '/_admin/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminAdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/$seccion': {
+      id: '/_admin/admin/$seccion'
+      path: '/admin/$seccion'
+      fullPath: '/admin/$seccion'
+      preLoaderRoute: typeof AdminAdminSeccionRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/perfil': {
+      id: '/_admin/admin/perfil'
+      path: '/admin/perfil'
+      fullPath: '/admin/perfil'
+      preLoaderRoute: typeof AdminAdminPerfilRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/servicios': {
+      id: '/_admin/admin/servicios'
+      path: '/admin/servicios'
+      fullPath: '/admin/servicios'
+      preLoaderRoute: typeof AdminAdminServiciosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_cliente/reservar/$slug': {
+      id: '/_cliente/reservar/$slug'
+      path: '/reservar/$slug'
+      fullPath: '/reservar/$slug'
+      preLoaderRoute: typeof ClienteReservarSlugRouteImport
       parentRoute: typeof ClienteRoute
     }
     '/_cliente/servicios/': {
@@ -187,14 +335,36 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminAdminSeccionRoute: typeof AdminAdminSeccionRoute
+  AdminAdminPerfilRoute: typeof AdminAdminPerfilRoute
+  AdminAdminServiciosRoute: typeof AdminAdminServiciosRoute
+  AdminAdminIndexRoute: typeof AdminAdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAdminSeccionRoute: AdminAdminSeccionRoute,
+  AdminAdminPerfilRoute: AdminAdminPerfilRoute,
+  AdminAdminServiciosRoute: AdminAdminServiciosRoute,
+  AdminAdminIndexRoute: AdminAdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 interface ClienteRouteChildren {
+  ClienteMisServiciosRoute: typeof ClienteMisServiciosRoute
+  ClientePerfilRoute: typeof ClientePerfilRoute
   ClienteReservasRoute: typeof ClienteReservasRoute
+  ClienteReservarSlugRoute: typeof ClienteReservarSlugRoute
   ClienteServiciosSlugRoute: typeof ClienteServiciosSlugRoute
   ClienteServiciosIndexRoute: typeof ClienteServiciosIndexRoute
 }
 
 const ClienteRouteChildren: ClienteRouteChildren = {
+  ClienteMisServiciosRoute: ClienteMisServiciosRoute,
+  ClientePerfilRoute: ClientePerfilRoute,
   ClienteReservasRoute: ClienteReservasRoute,
+  ClienteReservarSlugRoute: ClienteReservarSlugRoute,
   ClienteServiciosSlugRoute: ClienteServiciosSlugRoute,
   ClienteServiciosIndexRoute: ClienteServiciosIndexRoute,
 }
@@ -204,6 +374,7 @@ const ClienteRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   ClienteRoute: ClienteRouteWithChildren,
   KitRoute: KitRoute,
   LoginRoute: LoginRoute,

@@ -1,9 +1,4 @@
-// Utilidades de la capa mock: latencia simulada y persistencia en el navegador.
-
-export function delay<T>(value: T, min = 200, max = 400): Promise<T> {
-  const ms = min + Math.random() * (max - min)
-  return new Promise((resolve) => setTimeout(() => resolve(value), ms))
-}
+// Persistencia en el navegador (sesión y borrador de reserva).
 
 export function readJson<T>(storage: Storage, key: string): T | null {
   try {

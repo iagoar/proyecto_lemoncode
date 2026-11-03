@@ -11,3 +11,6 @@ dist-ssr
 .vinxi
 __unconfig*
 todos.json
+
+# json-server: datos vivos (la semilla es db/seed.json)
+db/db.json

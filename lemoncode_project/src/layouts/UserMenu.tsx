@@ -71,7 +71,13 @@ export function UserMenu({
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={() => navigate({ to: '/proximamente' })}>
+        <DropdownMenuItem
+          onSelect={() =>
+            navigate({
+              to: user.role === 'admin' ? '/admin/perfil' : '/perfil',
+            })
+          }
+        >
           <UserRound /> Perfil
         </DropdownMenuItem>
         <DropdownMenuSub>
@@ -83,7 +89,9 @@ export function UserMenu({
               value={theme}
               onValueChange={(value) => setTheme(value as Theme)}
             >
-              <DropdownMenuRadioItem value="system">Sistema</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="system">
+                Sistema
+              </DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="light">Claro</DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="dark">Oscuro</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
