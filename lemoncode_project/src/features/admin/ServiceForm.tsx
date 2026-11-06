@@ -75,7 +75,9 @@ const serviceSchema = z.object({
     .regex(/^\d+([,.]\d{1,2})?$/, 'Usa el formato 65 o 65,50'),
   mode: z.enum(['online', 'presencial']),
   professionalId: z.string().min(1, 'Elige un profesional'),
-  imageUrl: z.string().optional(),
+  // Sin imagen = cadena vacía: con `undefined` react-hook-form vuelve al valor
+  // por defecto y «Quitar imagen» no tendría efecto si el servicio ya tenía una.
+  imageUrl: z.string(),
   published: z.boolean(),
 })
 
@@ -103,7 +105,7 @@ function toValues(
         : '',
     mode: service?.mode ?? 'online',
     professionalId: fixedProfessionalId ?? service?.professionalId ?? '',
-    imageUrl: service?.imageUrl,
+    imageUrl: service?.imageUrl ?? '',
     published: service?.published ?? false,
   }
 }
@@ -124,7 +126,7 @@ function toInput(values: ServiceValues, id?: string): ServiceInput {
     priceCents: Math.round(Number(values.price.replace(',', '.')) * 100),
     mode: values.mode,
     professionalId: values.professionalId,
-    imageUrl: values.imageUrl,
+    imageUrl: values.imageUrl || undefined,
     published: values.published,
   }
 }
@@ -624,7 +626,7 @@ function ImageDrop({
   onChange,
 }: {
   value?: string
-  onChange: (value: string | undefined) => void
+  onChange: (value: string) => void
 }) {
   const id = useId()
   const [dragging, setDragging] = useState(false)
@@ -661,7 +663,7 @@ function ImageDrop({
             variant="outline"
             size="sm"
             className="absolute top-2 right-2"
-            onClick={() => onChange(undefined)}
+            onClick={() => onChange('')}
           >
             <X aria-hidden />
             Quitar imagen
