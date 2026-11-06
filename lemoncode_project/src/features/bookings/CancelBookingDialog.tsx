@@ -14,8 +14,8 @@ import {
   SheetDescription,
   SheetTitle,
 } from '#/components/ui/sheet'
-import { cancellationPolicy } from '#/content/legal'
 import { useIsDesktop } from '#/hooks/use-media-query'
+import { useCancellationPolicy } from '#/lib/api/settings'
 import type { BookingWithService } from '#/lib/api/types'
 import { formatDayLong } from '#/lib/format'
 import { bookingWhen } from './BookingRow'
@@ -33,6 +33,7 @@ export function CancelBookingDialog({
   onConfirm: () => void
 }) {
   const isDesktop = useIsDesktop()
+  const cancellationPolicy = useCancellationPolicy()
   const open = booking !== null
   const title = booking ? `¿Cancelar «${booking.service.name}»?` : ''
   const when = booking ? bookingWhen(booking) : null

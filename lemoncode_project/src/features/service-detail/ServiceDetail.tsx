@@ -15,7 +15,7 @@ import { PlaceholderMedia } from '#/components/brand/PlaceholderMedia'
 import { Badge } from '#/components/ui/badge'
 import { Button } from '#/components/ui/button'
 import { Skeleton } from '#/components/ui/skeleton'
-import { cancellationPolicy } from '#/content/legal'
+import { CancellationPolicy } from '#/components/CancellationPolicy'
 import { initials } from '#/lib/api/auth'
 import { availabilityQueries } from '#/lib/api/availability'
 import { reviewsQueries } from '#/lib/api/reviews'
@@ -216,7 +216,7 @@ export function ServiceDetail({
           </dl>
           <BookButton slug={service.slug} size="lg" className="w-full" />
           <p className="text-center text-caption text-muted-foreground">
-            {cancellationPolicy}
+            <CancellationPolicy />
           </p>
         </aside>
       </div>

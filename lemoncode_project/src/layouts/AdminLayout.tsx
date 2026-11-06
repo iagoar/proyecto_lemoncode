@@ -29,15 +29,14 @@ import { auth } from '#/lib/api/auth'
 import { UserAvatar } from './UserMenu'
 
 // HANDOFF §4 (AdminLayout): sidebar fija en md+, hoja lateral en móvil.
-// Solo Servicios y el perfil entran en el alcance; el resto lleva a "Próximamente".
 
-const sections: { seccion: string; label: string; icon: LucideIcon }[] = [
-  { seccion: 'servicios', label: 'Servicios', icon: LayoutGrid },
-  { seccion: 'reservas', label: 'Reservas', icon: CalendarCheck },
-  { seccion: 'profesionales', label: 'Profesionales', icon: Users },
-  { seccion: 'clientes', label: 'Clientes', icon: Contact },
-  { seccion: 'ajustes', label: 'Ajustes', icon: Settings },
-]
+const sections = [
+  { to: '/admin/servicios', label: 'Servicios', icon: LayoutGrid },
+  { to: '/admin/reservas', label: 'Reservas', icon: CalendarCheck },
+  { to: '/admin/profesionales', label: 'Profesionales', icon: Users },
+  { to: '/admin/clientes', label: 'Clientes', icon: Contact },
+  { to: '/admin/ajustes', label: 'Ajustes', icon: Settings },
+] as const satisfies { to: string; label: string; icon: LucideIcon }[]
 
 const navLink =
   'flex min-h-11 items-center gap-2.5 rounded-md px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring md:min-h-10'
@@ -114,12 +113,10 @@ function AdminNav({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <>
       <nav aria-label="Backoffice" className="flex flex-col gap-0.5">
-        {sections.map(({ seccion, label, icon: Icon }) => (
+        {sections.map(({ to, label, icon: Icon }) => (
           <Link
-            key={seccion}
-            // "servicios" tiene ruta propia; el resto cae en /admin/$seccion.
-            to="/admin/$seccion"
-            params={{ seccion }}
+            key={to}
+            to={to}
             onClick={onNavigate}
             className={navLink}
             activeProps={{

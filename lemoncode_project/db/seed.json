@@ -258,5 +258,12 @@
       "password": "javier1234"
     }
   ],
-  "bookings": []
+  "bookings": [],
+  "settings": {
+    "cancellationHours": 24,
+    "minNoticeHours": 0,
+    "payInSessionEnabled": true,
+    "recommenderEnabled": true,
+    "contactEmail": "hola@rumbo.es"
+  }
 }

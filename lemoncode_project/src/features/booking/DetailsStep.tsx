@@ -10,6 +10,7 @@ import { Label } from '#/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '#/components/ui/radio-group'
 import { Textarea } from '#/components/ui/textarea'
 import { paymentGatewayNote } from '#/content/legal'
+import { useSettings } from '#/lib/api/settings'
 import type { BookingContact, PaymentMethod } from '#/lib/api/types'
 import { cn } from '#/lib/utils'
 
@@ -112,10 +113,14 @@ export function DetailsStep({
   onSubmit: (values: DetailsSubmit) => void
   error?: string
 }) {
+  // Ajustes del backoffice: el pago en la sesión se puede desactivar.
+  const { payInSessionEnabled } = useSettings()
   const {
     register,
     control,
     watch,
+    setValue,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<DetailsValues>({
@@ -131,6 +136,12 @@ export function DetailsStep({
       cardCvc: '',
     },
   })
+
+  useEffect(() => {
+    if (!payInSessionEnabled && getValues('paymentMethod') === 'en_sesion') {
+      setValue('paymentMethod', 'tarjeta')
+    }
+  }, [payInSessionEnabled, getValues, setValue])
 
   // Vuelca al borrador lo que no es de la tarjeta, para no perderlo al volver al paso 1.
   useEffect(() => {
@@ -235,26 +246,28 @@ export function DetailsStep({
                 aria-label="Método de pago"
                 className="gap-2 md:grid-cols-[repeat(auto-fit,minmax(220px,1fr))] md:gap-3"
               >
-                {paymentOptions.map((option) => (
-                  <label
-                    key={option.value}
-                    className="flex min-h-16 cursor-pointer items-center gap-3 rounded-lg border border-input bg-background px-3.5 py-3 has-data-[state=checked]:border-primary has-data-[state=checked]:bg-accent has-data-[state=checked]:ring-1 has-data-[state=checked]:ring-primary md:px-4"
-                  >
-                    <RadioGroupItem
-                      value={option.value}
-                      aria-describedby={`pago-${option.value}-ayuda`}
-                    />
-                    <span className="flex flex-col">
-                      <span className="font-semibold">{option.label}</span>
-                      <span
-                        id={`pago-${option.value}-ayuda`}
-                        className="text-caption text-muted-foreground"
-                      >
-                        {option.hint}
+                {paymentOptions
+                  .filter((o) => payInSessionEnabled || o.value !== 'en_sesion')
+                  .map((option) => (
+                    <label
+                      key={option.value}
+                      className="flex min-h-16 cursor-pointer items-center gap-3 rounded-lg border border-input bg-background px-3.5 py-3 has-data-[state=checked]:border-primary has-data-[state=checked]:bg-accent has-data-[state=checked]:ring-1 has-data-[state=checked]:ring-primary md:px-4"
+                    >
+                      <RadioGroupItem
+                        value={option.value}
+                        aria-describedby={`pago-${option.value}-ayuda`}
+                      />
+                      <span className="flex flex-col">
+                        <span className="font-semibold">{option.label}</span>
+                        <span
+                          id={`pago-${option.value}-ayuda`}
+                          className="text-caption text-muted-foreground"
+                        >
+                          {option.hint}
+                        </span>
                       </span>
-                    </span>
-                  </label>
-                ))}
+                    </label>
+                  ))}
               </RadioGroup>
             )}
           />

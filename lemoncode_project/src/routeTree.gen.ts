@@ -17,10 +17,14 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProximamenteRouteImport } from './routes/proximamente'
 import { Route as ClienteMisServiciosRouteImport } from './routes/_cliente/mis-servicios'
 import { Route as ClientePerfilRouteImport } from './routes/_cliente/perfil'
+import { Route as ClienteRecomendadorRouteImport } from './routes/_cliente/recomendador'
 import { Route as ClienteReservasRouteImport } from './routes/_cliente/reservas'
 import { Route as AdminAdminIndexRouteImport } from './routes/_admin/admin/index'
-import { Route as AdminAdminSeccionRouteImport } from './routes/_admin/admin/$seccion'
+import { Route as AdminAdminAjustesRouteImport } from './routes/_admin/admin/ajustes'
+import { Route as AdminAdminClientesRouteImport } from './routes/_admin/admin/clientes'
 import { Route as AdminAdminPerfilRouteImport } from './routes/_admin/admin/perfil'
+import { Route as AdminAdminProfesionalesRouteImport } from './routes/_admin/admin/profesionales'
+import { Route as AdminAdminReservasRouteImport } from './routes/_admin/admin/reservas'
 import { Route as AdminAdminServiciosRouteImport } from './routes/_admin/admin/servicios'
 import { Route as ClienteReservarSlugRouteImport } from './routes/_cliente/reservar/$slug'
 import { Route as ClienteServiciosIndexRouteImport } from './routes/_cliente/servicios/index'
@@ -64,6 +68,11 @@ const ClientePerfilRoute = ClientePerfilRouteImport.update({
   path: '/perfil',
   getParentRoute: () => ClienteRoute,
 } as any)
+const ClienteRecomendadorRoute = ClienteRecomendadorRouteImport.update({
+  id: '/recomendador',
+  path: '/recomendador',
+  getParentRoute: () => ClienteRoute,
+} as any)
 const ClienteReservasRoute = ClienteReservasRouteImport.update({
   id: '/reservas',
   path: '/reservas',
@@ -74,14 +83,29 @@ const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminAdminSeccionRoute = AdminAdminSeccionRouteImport.update({
-  id: '/admin/$seccion',
-  path: '/admin/$seccion',
+const AdminAdminAjustesRoute = AdminAdminAjustesRouteImport.update({
+  id: '/admin/ajustes',
+  path: '/admin/ajustes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminClientesRoute = AdminAdminClientesRouteImport.update({
+  id: '/admin/clientes',
+  path: '/admin/clientes',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminAdminPerfilRoute = AdminAdminPerfilRouteImport.update({
   id: '/admin/perfil',
   path: '/admin/perfil',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminProfesionalesRoute = AdminAdminProfesionalesRouteImport.update({
+  id: '/admin/profesionales',
+  path: '/admin/profesionales',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAdminReservasRoute = AdminAdminReservasRouteImport.update({
+  id: '/admin/reservas',
+  path: '/admin/reservas',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminAdminServiciosRoute = AdminAdminServiciosRouteImport.update({
@@ -112,9 +136,13 @@ export interface FileRoutesByFullPath {
   '/proximamente': typeof ProximamenteRoute
   '/mis-servicios': typeof ClienteMisServiciosRoute
   '/perfil': typeof ClientePerfilRoute
+  '/recomendador': typeof ClienteRecomendadorRoute
   '/reservas': typeof ClienteReservasRoute
-  '/admin/$seccion': typeof AdminAdminSeccionRoute
+  '/admin/ajustes': typeof AdminAdminAjustesRoute
+  '/admin/clientes': typeof AdminAdminClientesRoute
   '/admin/perfil': typeof AdminAdminPerfilRoute
+  '/admin/profesionales': typeof AdminAdminProfesionalesRoute
+  '/admin/reservas': typeof AdminAdminReservasRoute
   '/admin/servicios': typeof AdminAdminServiciosRoute
   '/reservar/$slug': typeof ClienteReservarSlugRoute
   '/servicios/$slug': typeof ClienteServiciosSlugRoute
@@ -128,9 +156,13 @@ export interface FileRoutesByTo {
   '/proximamente': typeof ProximamenteRoute
   '/mis-servicios': typeof ClienteMisServiciosRoute
   '/perfil': typeof ClientePerfilRoute
+  '/recomendador': typeof ClienteRecomendadorRoute
   '/reservas': typeof ClienteReservasRoute
-  '/admin/$seccion': typeof AdminAdminSeccionRoute
+  '/admin/ajustes': typeof AdminAdminAjustesRoute
+  '/admin/clientes': typeof AdminAdminClientesRoute
   '/admin/perfil': typeof AdminAdminPerfilRoute
+  '/admin/profesionales': typeof AdminAdminProfesionalesRoute
+  '/admin/reservas': typeof AdminAdminReservasRoute
   '/admin/servicios': typeof AdminAdminServiciosRoute
   '/reservar/$slug': typeof ClienteReservarSlugRoute
   '/servicios/$slug': typeof ClienteServiciosSlugRoute
@@ -147,9 +179,13 @@ export interface FileRoutesById {
   '/proximamente': typeof ProximamenteRoute
   '/_cliente/mis-servicios': typeof ClienteMisServiciosRoute
   '/_cliente/perfil': typeof ClientePerfilRoute
+  '/_cliente/recomendador': typeof ClienteRecomendadorRoute
   '/_cliente/reservas': typeof ClienteReservasRoute
-  '/_admin/admin/$seccion': typeof AdminAdminSeccionRoute
+  '/_admin/admin/ajustes': typeof AdminAdminAjustesRoute
+  '/_admin/admin/clientes': typeof AdminAdminClientesRoute
   '/_admin/admin/perfil': typeof AdminAdminPerfilRoute
+  '/_admin/admin/profesionales': typeof AdminAdminProfesionalesRoute
+  '/_admin/admin/reservas': typeof AdminAdminReservasRoute
   '/_admin/admin/servicios': typeof AdminAdminServiciosRoute
   '/_cliente/reservar/$slug': typeof ClienteReservarSlugRoute
   '/_cliente/servicios/$slug': typeof ClienteServiciosSlugRoute
@@ -165,9 +201,13 @@ export interface FileRouteTypes {
     | '/proximamente'
     | '/mis-servicios'
     | '/perfil'
+    | '/recomendador'
     | '/reservas'
-    | '/admin/$seccion'
+    | '/admin/ajustes'
+    | '/admin/clientes'
     | '/admin/perfil'
+    | '/admin/profesionales'
+    | '/admin/reservas'
     | '/admin/servicios'
     | '/reservar/$slug'
     | '/servicios/$slug'
@@ -181,9 +221,13 @@ export interface FileRouteTypes {
     | '/proximamente'
     | '/mis-servicios'
     | '/perfil'
+    | '/recomendador'
     | '/reservas'
-    | '/admin/$seccion'
+    | '/admin/ajustes'
+    | '/admin/clientes'
     | '/admin/perfil'
+    | '/admin/profesionales'
+    | '/admin/reservas'
     | '/admin/servicios'
     | '/reservar/$slug'
     | '/servicios/$slug'
@@ -199,9 +243,13 @@ export interface FileRouteTypes {
     | '/proximamente'
     | '/_cliente/mis-servicios'
     | '/_cliente/perfil'
+    | '/_cliente/recomendador'
     | '/_cliente/reservas'
-    | '/_admin/admin/$seccion'
+    | '/_admin/admin/ajustes'
+    | '/_admin/admin/clientes'
     | '/_admin/admin/perfil'
+    | '/_admin/admin/profesionales'
+    | '/_admin/admin/reservas'
     | '/_admin/admin/servicios'
     | '/_cliente/reservar/$slug'
     | '/_cliente/servicios/$slug'
@@ -276,6 +324,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClientePerfilRouteImport
       parentRoute: typeof ClienteRoute
     }
+    '/_cliente/recomendador': {
+      id: '/_cliente/recomendador'
+      path: '/recomendador'
+      fullPath: '/recomendador'
+      preLoaderRoute: typeof ClienteRecomendadorRouteImport
+      parentRoute: typeof ClienteRoute
+    }
     '/_cliente/reservas': {
       id: '/_cliente/reservas'
       path: '/reservas'
@@ -290,11 +345,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/_admin/admin/$seccion': {
-      id: '/_admin/admin/$seccion'
-      path: '/admin/$seccion'
-      fullPath: '/admin/$seccion'
-      preLoaderRoute: typeof AdminAdminSeccionRouteImport
+    '/_admin/admin/ajustes': {
+      id: '/_admin/admin/ajustes'
+      path: '/admin/ajustes'
+      fullPath: '/admin/ajustes'
+      preLoaderRoute: typeof AdminAdminAjustesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/clientes': {
+      id: '/_admin/admin/clientes'
+      path: '/admin/clientes'
+      fullPath: '/admin/clientes'
+      preLoaderRoute: typeof AdminAdminClientesRouteImport
       parentRoute: typeof AdminRoute
     }
     '/_admin/admin/perfil': {
@@ -302,6 +364,20 @@ declare module '@tanstack/react-router' {
       path: '/admin/perfil'
       fullPath: '/admin/perfil'
       preLoaderRoute: typeof AdminAdminPerfilRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/profesionales': {
+      id: '/_admin/admin/profesionales'
+      path: '/admin/profesionales'
+      fullPath: '/admin/profesionales'
+      preLoaderRoute: typeof AdminAdminProfesionalesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/admin/reservas': {
+      id: '/_admin/admin/reservas'
+      path: '/admin/reservas'
+      fullPath: '/admin/reservas'
+      preLoaderRoute: typeof AdminAdminReservasRouteImport
       parentRoute: typeof AdminRoute
     }
     '/_admin/admin/servicios': {
@@ -336,15 +412,21 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
-  AdminAdminSeccionRoute: typeof AdminAdminSeccionRoute
+  AdminAdminAjustesRoute: typeof AdminAdminAjustesRoute
+  AdminAdminClientesRoute: typeof AdminAdminClientesRoute
   AdminAdminPerfilRoute: typeof AdminAdminPerfilRoute
+  AdminAdminProfesionalesRoute: typeof AdminAdminProfesionalesRoute
+  AdminAdminReservasRoute: typeof AdminAdminReservasRoute
   AdminAdminServiciosRoute: typeof AdminAdminServiciosRoute
   AdminAdminIndexRoute: typeof AdminAdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
-  AdminAdminSeccionRoute: AdminAdminSeccionRoute,
+  AdminAdminAjustesRoute: AdminAdminAjustesRoute,
+  AdminAdminClientesRoute: AdminAdminClientesRoute,
   AdminAdminPerfilRoute: AdminAdminPerfilRoute,
+  AdminAdminProfesionalesRoute: AdminAdminProfesionalesRoute,
+  AdminAdminReservasRoute: AdminAdminReservasRoute,
   AdminAdminServiciosRoute: AdminAdminServiciosRoute,
   AdminAdminIndexRoute: AdminAdminIndexRoute,
 }
@@ -354,6 +436,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 interface ClienteRouteChildren {
   ClienteMisServiciosRoute: typeof ClienteMisServiciosRoute
   ClientePerfilRoute: typeof ClientePerfilRoute
+  ClienteRecomendadorRoute: typeof ClienteRecomendadorRoute
   ClienteReservasRoute: typeof ClienteReservasRoute
   ClienteReservarSlugRoute: typeof ClienteReservarSlugRoute
   ClienteServiciosSlugRoute: typeof ClienteServiciosSlugRoute
@@ -363,6 +446,7 @@ interface ClienteRouteChildren {
 const ClienteRouteChildren: ClienteRouteChildren = {
   ClienteMisServiciosRoute: ClienteMisServiciosRoute,
   ClientePerfilRoute: ClientePerfilRoute,
+  ClienteRecomendadorRoute: ClienteRecomendadorRoute,
   ClienteReservasRoute: ClienteReservasRoute,
   ClienteReservarSlugRoute: ClienteReservarSlugRoute,
   ClienteServiciosSlugRoute: ClienteServiciosSlugRoute,

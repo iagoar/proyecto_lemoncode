@@ -3,12 +3,14 @@ import { queryOptions } from '@tanstack/react-query'
 import {
   addDays,
   daysOfMonth,
+  madridToIso,
   nowInMadrid,
   toMadrid,
   weekdayIndex,
 } from '#/lib/dates'
 import { http } from './http'
 import { getService } from './services'
+import { getSettings } from './settings'
 import type {
   Booking,
   DayAvailability,
@@ -51,6 +53,8 @@ function hash(text: string) {
 interface Context {
   serviceId: string
   schedule?: ServiceSchedule
+  /** Ajustes → antelación mínima: no se reserva antes de este instante. */
+  earliest: Date
   /** 'YYYY-MM-DD' → horas ('HH:mm') ya reservadas */
   booked: Map<string, Set<string>>
 }
@@ -60,9 +64,10 @@ async function loadContext(
   serviceId: string,
   exceptBookingId?: string,
 ): Promise<Context> {
-  const [service, bookings] = await Promise.all([
+  const [service, bookings, settings] = await Promise.all([
     getService(serviceId),
     http.get<Booking[]>('/bookings', { serviceId, status_ne: 'cancelada' }),
+    getSettings(),
   ])
   const booked = new Map<string, Set<string>>()
   for (const booking of bookings) {
@@ -72,7 +77,12 @@ async function loadContext(
     day.add(start.time)
     booked.set(start.date, day)
   }
-  return { serviceId, schedule: service?.schedule, booked }
+  return {
+    serviceId,
+    schedule: service?.schedule,
+    booked,
+    earliest: new Date(Date.now() + settings.minNoticeHours * 3_600_000),
+  }
 }
 
 function isClosed(date: string, today: string, schedule?: ServiceSchedule) {
@@ -97,6 +107,7 @@ function computeSlots(ctx: Context, date: string): Slot[] {
       !fullDay &&
       !booked?.has(time) &&
       !(date === now.date && time <= now.time) &&
+      new Date(madridToIso(date, time)) > ctx.earliest &&
       (ctx.schedule !== undefined ||
         hash(`${ctx.serviceId}:${date}:${time}`) % 3 !== 0),
   }))

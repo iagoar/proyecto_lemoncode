@@ -9,7 +9,7 @@ import { StatePage } from '#/components/StatePage'
 import { Button } from '#/components/ui/button'
 import { Progress } from '#/components/ui/progress'
 import { Skeleton } from '#/components/ui/skeleton'
-import { cancellationPolicy } from '#/content/legal'
+import { CancellationPolicy } from '#/components/CancellationPolicy'
 import { BookingSummary, slotRange } from '#/features/booking/BookingSummary'
 import { ConfirmationStep } from '#/features/booking/ConfirmationStep'
 import { DateTimeStep } from '#/features/booking/DateTimeStep'
@@ -241,7 +241,7 @@ function BookingFlow({ service }: { service: ServiceWithProfessional }) {
               </Button>
             )}
             <p className="text-caption text-muted-foreground">
-              {cancellationPolicy}
+              <CancellationPolicy />
             </p>
           </BookingSummary>
 
@@ -449,7 +449,7 @@ function RescheduleFlow({
             </p>
           )}
           <p className="text-caption text-muted-foreground">
-            {cancellationPolicy}
+            <CancellationPolicy />
           </p>
         </BookingSummary>
 

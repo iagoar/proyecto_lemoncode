@@ -8,10 +8,11 @@ import {
   weekdayIndex,
 } from '#/lib/dates'
 import { isSlotAvailable } from './availability'
-import { getSession } from './auth'
+import { getSession, requireAdmin } from './auth'
 import { http } from './http'
 import { addReview } from './reviews'
 import { getService } from './services'
+import { getSettings } from './settings'
 import type {
   Booking,
   BookingContact,
@@ -148,6 +149,14 @@ async function create(input: CreateBookingInput): Promise<Booking> {
   if (!(await isSlotAvailable(input.serviceId, input.date, input.time))) {
     throw new Error('Esa hora ya no está disponible. Elige otra.')
   }
+  if (
+    input.paymentMethod === 'en_sesion' &&
+    !(await getSettings()).payInSessionEnabled
+  ) {
+    throw new Error(
+      'El pago en la sesión no está disponible. Paga con tarjeta.',
+    )
+  }
 
   return http.post<Booking>('/bookings', {
     id: `bk-${Date.now().toString(36)}`,
@@ -162,7 +171,23 @@ async function create(input: CreateBookingInput): Promise<Booking> {
   } satisfies Booking)
 }
 
+export class CancellationWindowError extends Error {
+  constructor(hours: number, contactEmail: string) {
+    super(
+      `Solo puedes cancelar hasta ${hours} h antes de la sesión. Si lo necesitas, escríbenos a ${contactEmail}.`,
+    )
+  }
+}
+
+/** Ajustes → plazo de cancelación: dentro de ese plazo el cliente ya no puede cancelar. */
 async function cancel(id: string) {
+  const booking = await findMine(id)
+  const { cancellationHours, contactEmail } = await getSettings()
+  const limit =
+    new Date(booking.start).getTime() - cancellationHours * 3_600_000
+  if (cancellationHours > 0 && Date.now() > limit) {
+    throw new CancellationWindowError(cancellationHours, contactEmail)
+  }
   return updateMine(id, { status: 'cancelada' })
 }
 
@@ -219,7 +244,33 @@ async function listReceived(): Promise<BookingWithService[]> {
   )
 }
 
+/** Backoffice: todas las reservas, de la más reciente a la más antigua. */
+async function listAll(): Promise<BookingWithService[]> {
+  requireAdmin()
+  const items = await http.get<Booking[]>('/bookings', {
+    _sort: 'start',
+    _order: 'desc',
+  })
+  return withServices(items)
+}
+
+/**
+ * Backoffice: marcar como pagada (pendiente_pago → confirmada) o cancelar.
+ * El admin puede cancelar sin plazo.
+ */
+async function setStatus(id: string, status: 'confirmada' | 'cancelada') {
+  requireAdmin()
+  const updated = await http.patch<Booking>(
+    `/bookings/${encodeURIComponent(id)}`,
+    { status },
+  )
+  const [withService] = await withServices([updated])
+  return withService
+}
+
 export const bookings = {
+  listAll,
+  setStatus,
   listMine,
   listReceived,
   get,
@@ -235,6 +286,11 @@ export const bookingsQueries = {
     queryOptions({
       queryKey: [...bookingsQueries.all, 'mine'],
       queryFn: listMine,
+    }),
+  admin: () =>
+    queryOptions({
+      queryKey: [...bookingsQueries.all, 'admin'],
+      queryFn: listAll,
     }),
   received: () =>
     queryOptions({

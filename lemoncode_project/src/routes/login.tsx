@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useState } from 'react'
 import { z } from 'zod'
 
 import { BrandBlocks } from '#/components/brand/BrandBlocks'
@@ -31,8 +32,11 @@ function LoginPage() {
   const { next, registro } = Route.useSearch()
   const navigate = useNavigate()
   const mode = registro ? 'registro' : 'login'
+  // Email de la cuenta recién creada: rellena el login y muestra el aviso.
+  const [registeredEmail, setRegisteredEmail] = useState<string | null>(null)
 
   function setMode(value: string) {
+    if (value === 'registro') setRegisteredEmail(null)
     navigate({
       to: '/login',
       search: (prev) => ({
@@ -50,6 +54,11 @@ function LoginPage() {
     else if (user.role === 'profesional')
       navigate({ to: '/mis-servicios', replace: true })
     else navigate({ to: '/servicios', replace: true })
+  }
+
+  function handleRegistered(user: User) {
+    setRegisteredEmail(user.email)
+    setMode('login')
   }
 
   return (
@@ -98,6 +107,9 @@ function LoginPage() {
                 text="Accede para reservar y gestionar tus sesiones."
               />
               <LoginForm
+                key={registeredEmail ?? 'login'}
+                defaultEmail={registeredEmail ?? undefined}
+                justRegistered={registeredEmail !== null}
                 onSuccess={handleSuccess}
                 onRegister={() => setMode('registro')}
               />
@@ -112,7 +124,7 @@ function LoginPage() {
                 text="Regístrate gratis y reserva tu primera sesión."
               />
               <RegisterForm
-                onSuccess={handleSuccess}
+                onSuccess={handleRegistered}
                 onLogin={() => setMode('login')}
               />
             </TabsContent>

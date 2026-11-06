@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { Button } from '#/components/ui/button'
@@ -19,6 +20,7 @@ import {
 } from '#/features/catalog/search'
 import { useIsDesktop } from '#/hooks/use-media-query'
 import { SERVICES_PAGE_SIZE, servicesQueries } from '#/lib/api/services'
+import { useSettings } from '#/lib/api/settings'
 import { cn } from '#/lib/utils'
 
 export const Route = createFileRoute('/_cliente/servicios/')({
@@ -35,6 +37,7 @@ function CatalogPage() {
   const isDesktop = useIsDesktop()
   const page = search.pagina ?? 1
 
+  const { recommenderEnabled } = useSettings()
   // Escritorio: página a página. Móvil: "Cargar más" acumula páginas.
   const query = useQuery(
     servicesQueries.list({
@@ -84,6 +87,21 @@ function CatalogPage() {
           </span>
         </p>
       </div>
+
+      {recommenderEnabled && (
+        <Card className="flex-row items-center gap-3 border-primary/30 bg-accent p-4 md:gap-4 md:px-5">
+          <Sparkles aria-hidden className="size-6 shrink-0 text-primary" />
+          <div className="flex flex-1 flex-col gap-0.5">
+            <p className="font-display font-semibold">¿No sabes qué elegir?</p>
+            <p className="text-sm text-muted-foreground">
+              Responde unas preguntas y te recomendamos un servicio.
+            </p>
+          </div>
+          <Button asChild variant="outline" className="shrink-0">
+            <Link to="/recomendador">Empezar</Link>
+          </Button>
+        </Card>
+      )}
 
       <CatalogFilters
         query={queryText}
@@ -146,10 +164,7 @@ function CatalogPage() {
           title="No hay servicios con esos filtros"
           text="Prueba con otra búsqueda o quita los filtros para ver todo el catálogo."
           action={
-            <Button
-              variant="outline"
-              onClick={() => navigate({ search: {} })}
-            >
+            <Button variant="outline" onClick={() => navigate({ search: {} })}>
               Quitar filtros
             </Button>
           }

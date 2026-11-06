@@ -10,12 +10,13 @@ import type { ProfileInput, User } from './types'
 // emails existen). Al registrarse, `admin@…` queda como admin; el rol se
 // guarda en el servidor, así que también se puede cambiar en db.json.
 // Es una simulación: json-server no protege nada.
+// Registrarse no abre sesión: después hay que iniciarla con la contraseña.
 // La sesión es local: "Recordarme" la guarda en localStorage; si no, en sessionStorage.
 
 // v3: invalida las sesiones abiertas antes de que se pidiera contraseña.
 const SESSION_KEY = 'rumbo-session-v3'
 
-function normalizeEmail(email: string) {
+export function normalizeEmail(email: string) {
   return email.trim().toLowerCase()
 }
 
@@ -28,19 +29,24 @@ function nameFromEmail(email: string) {
     .join(' ')
 }
 
-type UserRecord = User & { password?: string }
+export type UserRecord = User & { password?: string }
 
 /** Quita la contraseña antes de que el usuario llegue a la sesión o a las pantallas. */
-function toUser({ password: _password, ...user }: UserRecord): User {
+export function toUser({ password: _password, ...user }: UserRecord): User {
   return user
 }
 
-async function findByEmail(email: string) {
+export async function findByEmail(email: string) {
   const [user] = await http.get<UserRecord[]>('/users', { email })
   return user ?? null
 }
 
-async function createUser(email: string, password?: string, name?: string) {
+async function createUser(
+  email: string,
+  password?: string,
+  name?: string,
+  extra?: Pick<User, 'role' | 'professionalId'>,
+) {
   const user = await http.post<UserRecord>('/users', {
     id: `usr-${Date.now().toString(36)}`,
     name: name?.trim() || nameFromEmail(email) || email,
@@ -48,6 +54,7 @@ async function createUser(email: string, password?: string, name?: string) {
     role: email.startsWith('admin@') ? 'admin' : 'cliente',
     createdAt: nowInMadrid().date,
     password,
+    ...extra,
   } satisfies UserRecord)
   return toUser(user)
 }
@@ -83,6 +90,15 @@ async function login(email: string, password: string, remember = true) {
   return user
 }
 
+/** Para la capa de datos del backoffice: corta si quien llama no es admin. */
+export function requireAdmin() {
+  const user = getSession()
+  if (user?.role !== 'admin') {
+    throw new Error('Solo un administrador puede hacer esto.')
+  }
+  return user
+}
+
 export class EmailTakenError extends Error {
   constructor() {
     super('Ya existe una cuenta con ese email')
@@ -109,8 +125,24 @@ async function register(name: string, email: string, password: string) {
   } else {
     user = await createUser(normalized, password, name)
   }
-  saveSession(user, true)
+  // No abre sesión: tras registrarse, el usuario entra desde el login.
   return user
+}
+
+/** Backoffice: cuenta de acceso para la ficha de un profesional. */
+export async function createProfessionalAccount(input: {
+  name: string
+  email: string
+  password: string
+  professionalId: string
+}) {
+  requireAdmin()
+  const email = normalizeEmail(input.email)
+  if (await findByEmail(email)) throw new EmailTakenError()
+  return createUser(email, input.password, input.name, {
+    role: 'profesional',
+    professionalId: input.professionalId,
+  })
 }
 
 async function logout() {

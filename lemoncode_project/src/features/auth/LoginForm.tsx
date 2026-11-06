@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link } from '@tanstack/react-router'
-import { useState } from 'react'
+import { CircleCheck } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -9,6 +10,7 @@ import { Checkbox } from '#/components/ui/checkbox'
 import { Input } from '#/components/ui/input'
 import { Label } from '#/components/ui/label'
 import { auth, InvalidCredentialsError } from '#/lib/api/auth'
+import { ApiError } from '#/lib/api/http'
 import type { User } from '#/lib/api/types'
 import { cn } from '#/lib/utils'
 
@@ -32,9 +34,15 @@ const linkClass =
 export function LoginForm({
   onSuccess,
   onRegister,
+  defaultEmail = '',
+  justRegistered = false,
 }: {
   onSuccess: (user: User) => void
   onRegister: () => void
+  /** Email con el que rellenar el formulario (p. ej. tras registrarse). */
+  defaultEmail?: string
+  /** Muestra el aviso de cuenta creada. */
+  justRegistered?: boolean
 }) {
   const [formError, setFormError] = useState<string | null>(null)
   const [invalidCredentials, setInvalidCredentials] = useState(false)
@@ -43,11 +51,17 @@ export function LoginForm({
     register,
     control,
     handleSubmit,
+    setFocus,
     formState: { errors, isSubmitting },
   } = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
-    defaultValues: { email: '', password: '', remember: true },
+    defaultValues: { email: defaultEmail, password: '', remember: true },
   })
+
+  // Tras registrarse, el email ya está puesto: solo falta la contraseña.
+  useEffect(() => {
+    if (justRegistered) setFocus('password')
+  }, [justRegistered, setFocus])
 
   const onSubmit = handleSubmit(async ({ email, password, remember }) => {
     setFormError(null)
@@ -56,6 +70,10 @@ export function LoginForm({
       onSuccess(await auth.login(email, password, remember))
     } catch (error) {
       if (error instanceof InvalidCredentialsError) setInvalidCredentials(true)
+      else if (error instanceof ApiError && error.status === 0)
+        setFormError(
+          'No hay conexión con el servidor. Comprueba que la API está arrancada (npm run api) e inténtalo de nuevo.',
+        )
       else setFormError('No hemos podido iniciar sesión. Inténtalo de nuevo.')
     }
   })
@@ -79,6 +97,24 @@ export function LoginForm({
       onSubmit={onSubmit}
       className="flex flex-col gap-4 md:gap-5"
     >
+      {justRegistered && (
+        <div
+          role="status"
+          className="flex items-start gap-2.5 rounded-lg border border-primary/40 bg-accent px-3.5 py-3 text-sm"
+        >
+          <CircleCheck
+            aria-hidden
+            className="mt-0.5 size-4 shrink-0 text-primary"
+          />
+          <div className="flex flex-col gap-0.5">
+            <p className="font-semibold">Tu cuenta está lista</p>
+            <p className="text-muted-foreground">
+              Introduce tu contraseña para iniciar sesión.
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="hidden flex-col gap-5 md:flex">
         {googleButton('')}
         <Divider>o con tu email</Divider>

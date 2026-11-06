@@ -8,6 +8,7 @@ import { Checkbox } from '#/components/ui/checkbox'
 import { Input } from '#/components/ui/input'
 import { Label } from '#/components/ui/label'
 import { auth, EmailTakenError } from '#/lib/api/auth'
+import { ApiError } from '#/lib/api/http'
 import type { User } from '#/lib/api/types'
 import { cn } from '#/lib/utils'
 import { Divider } from './LoginForm'
@@ -30,7 +31,8 @@ type RegisterValues = z.infer<typeof registerSchema>
 const linkClass =
   'rounded-sm font-medium text-primary underline-offset-4 hover:underline'
 
-// Registro en la misma tarjeta que el login. Mismo orden que el login:
+// Registro en la misma tarjeta que el login. Al terminar no abre sesión:
+// la página vuelve al login con el email ya puesto. Mismo orden que el login:
 // escritorio empieza por Google; móvil lo deja al final.
 export function RegisterForm({
   onSuccess,
@@ -62,6 +64,10 @@ export function RegisterForm({
           type: 'taken',
           message: 'Ya existe una cuenta con ese email',
         })
+      } else if (error instanceof ApiError && error.status === 0) {
+        setFormError(
+          'No hay conexión con el servidor. Comprueba que la API está arrancada (npm run api) e inténtalo de nuevo.',
+        )
       } else {
         setFormError('No hemos podido crear tu cuenta. Inténtalo de nuevo.')
       }

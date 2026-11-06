@@ -1,7 +1,7 @@
 // TODO: copy legal pendiente de negocio (HANDOFF §6 y §11).
 
-export const cancellationPolicy =
-  'Cancelación gratuita hasta 24 h antes de la sesión.'
+// La política de cancelación depende de Ajustes: ver `cancellationPolicyText`
+// en `src/lib/api/settings.ts`.
 
 export const paymentGatewayNote =
   'Pago seguro gestionado por nuestra pasarela de pago.'

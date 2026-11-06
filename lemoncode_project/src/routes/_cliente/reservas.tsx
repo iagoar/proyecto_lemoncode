@@ -16,7 +16,11 @@ import {
 import { CancelBookingDialog } from '#/features/bookings/CancelBookingDialog'
 import { RateDialog } from '#/features/bookings/RateDialog'
 import { availabilityQueries } from '#/lib/api/availability'
-import { bookings, bookingsQueries } from '#/lib/api/bookings'
+import {
+  bookings,
+  bookingsQueries,
+  CancellationWindowError,
+} from '#/lib/api/bookings'
 import { reviewsQueries } from '#/lib/api/reviews'
 import type { BookingWithService } from '#/lib/api/types'
 import { formatDayLong } from '#/lib/format'
@@ -88,8 +92,12 @@ function BookingsPage() {
       queryClient.invalidateQueries({ queryKey: availabilityQueries.all })
       toast.success(`Has cancelado «${booking.service.name}»`)
     },
-    onError: () =>
-      toast.error('No hemos podido cancelar la reserva. Inténtalo de nuevo.'),
+    onError: (error) =>
+      toast.error(
+        error instanceof CancellationWindowError
+          ? error.message
+          : 'No hemos podido cancelar la reserva. Inténtalo de nuevo.',
+      ),
   })
 
   const rate = useMutation({
