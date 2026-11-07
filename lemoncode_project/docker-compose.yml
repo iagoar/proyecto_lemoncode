@@ -1,0 +1,77 @@
+# App en http://localhost:3000, json-server en :3001,
+# RustFS (imágenes, S3) en :9000 y su consola en :9001.
+services:
+  web:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      S3_ENDPOINT: http://rustfs:9000
+      # El navegador no ve `rustfs`: las URLs de las imágenes apuntan al host.
+      S3_PUBLIC_URL: http://localhost:9000
+      S3_BUCKET: ${S3_BUCKET:-images}
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY:-rustfsadmin}
+      S3_SECRET_KEY: ${S3_SECRET_KEY:-rustfsadmin}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    depends_on:
+      - api
+      - rustfs
+    restart: unless-stopped
+
+  # json-server. Usa la etapa `build` del Dockerfile (tiene node_modules).
+  api:
+    build:
+      context: .
+      target: build
+    command: sh -c "node scripts/ensure-db.mjs && npx json-server --watch db/db.json --port 3001 --host 0.0.0.0"
+    ports:
+      - '3001:3001'
+    volumes:
+      # El volumen se inicializa con db/ de la imagen (seed.json) la primera vez.
+      - api-db:/app/db
+    restart: unless-stopped
+
+  rustfs:
+    image: rustfs/rustfs:latest
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY:-rustfsadmin}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_KEY:-rustfsadmin}
+      RUSTFS_CONSOLE_ENABLE: 'true'
+    volumes:
+      - rustfs-data:/data
+    restart: unless-stopped
+
+  # Crea el bucket y lo deja con lectura pública (las imágenes se sirven directamente).
+  rustfs-init:
+    image: amazon/aws-cli:2.39.6
+    depends_on:
+      - rustfs
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        attempts=0
+        until curl -fsS http://rustfs:9000/health/ready >/dev/null; do
+          attempts=$$((attempts + 1))
+          if [ "$$attempts" -ge 60 ]; then
+            echo "RustFS no está listo después de 60 intentos" >&2
+            exit 1
+          fi
+          sleep 1
+        done
+        if ! aws --endpoint-url http://rustfs:9000 s3api head-bucket --bucket "$$S3_BUCKET"; then
+          aws --endpoint-url http://rustfs:9000 s3api create-bucket --bucket "$$S3_BUCKET"
+        fi
+        policy=$$(printf '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":"*","Action":["s3:GetObject"],"Resource":["arn:aws:s3:::%s/*"]}]}' "$$S3_BUCKET")
+        aws --endpoint-url http://rustfs:9000 s3api put-bucket-policy --bucket "$$S3_BUCKET" --policy "$$policy"
+    environment:
+      AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:-rustfsadmin}
+      AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:-rustfsadmin}
+      AWS_DEFAULT_REGION: us-east-1
+      S3_BUCKET: ${S3_BUCKET:-images}
+
+volumes:
+  api-db:
+  rustfs-data:
