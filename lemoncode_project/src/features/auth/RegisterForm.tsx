@@ -11,6 +11,7 @@ import { auth, EmailTakenError } from '#/lib/api/auth'
 import { ApiError } from '#/lib/api/http'
 import type { User } from '#/lib/api/types'
 import { cn } from '#/lib/utils'
+import { GoogleButton } from './GoogleButton'
 import { Divider } from './LoginForm'
 
 const registerSchema = z.object({
@@ -36,9 +37,12 @@ const linkClass =
 // escritorio empieza por Google; móvil lo deja al final.
 export function RegisterForm({
   onSuccess,
+  onSignedIn,
   onLogin,
 }: {
   onSuccess: (user: User) => void
+  /** Entrada con Google: abre sesión sin pasar por el login. */
+  onSignedIn: (user: User) => void
   onLogin: () => void
 }) {
   const [formError, setFormError] = useState<string | null>(null)
@@ -74,17 +78,9 @@ export function RegisterForm({
     }
   })
 
-  // Decorativo: el acceso con Google no está implementado.
+  // Con Google no hay paso intermedio: entra directamente.
   const googleButton = (className: string) => (
-    <Button
-      type="button"
-      variant="outline"
-      tabIndex={-1}
-      aria-hidden
-      className={cn('w-full shadow-xs', className)}
-    >
-      Continuar con Google
-    </Button>
+    <GoogleButton onSuccess={onSignedIn} className={className} />
   )
 
   return (

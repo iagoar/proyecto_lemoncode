@@ -13,6 +13,7 @@ import { auth, InvalidCredentialsError } from '#/lib/api/auth'
 import { ApiError } from '#/lib/api/http'
 import type { User } from '#/lib/api/types'
 import { cn } from '#/lib/utils'
+import { GoogleButton } from './GoogleButton'
 
 const loginSchema = z.object({
   email: z
@@ -52,6 +53,7 @@ export function LoginForm({
     control,
     handleSubmit,
     setFocus,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
@@ -78,17 +80,12 @@ export function LoginForm({
     }
   })
 
-  // Decorativo: el acceso con Google no está implementado.
   const googleButton = (className: string) => (
-    <Button
-      type="button"
-      variant="outline"
-      tabIndex={-1}
-      aria-hidden
-      className={cn('w-full shadow-xs', className)}
-    >
-      Continuar con Google
-    </Button>
+    <GoogleButton
+      onSuccess={onSuccess}
+      remember={() => getValues('remember')}
+      className={className}
+    />
   )
 
   return (
