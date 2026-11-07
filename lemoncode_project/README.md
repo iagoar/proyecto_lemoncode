@@ -1,5 +1,12 @@
 Welcome to your new TanStack Start app!
 
+# Docker Compose
+
+From this directory, run `docker compose up -d --build` to start the app,
+json-server, and RustFS. The `rustfs-init` service uses AWS CLI to create the
+`S3_BUCKET` bucket (default: `images`) and enable public object downloads.
+If initialization fails, inspect it with `docker compose logs rustfs-init`.
+
 # Getting Started
 
 To run this application:

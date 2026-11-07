@@ -31,6 +31,7 @@ import type {
   ServiceWithProfessional,
 } from '#/lib/api/types'
 import { categoryLabel, modeLabel } from '#/lib/format'
+import { uploadImage } from '#/lib/api/images'
 import { cn } from '#/lib/utils'
 
 // HANDOFF §5.6. Validación: nombre y categoría obligatorios, duración entera
@@ -38,7 +39,7 @@ import { cn } from '#/lib/utils'
 // Además: resumen opcional, "Qué incluye" (hasta 8 puntos) y disponibilidad
 // semanal (al menos un día y una franja).
 
-const MAX_IMAGE_BYTES = 1024 * 1024
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024
 const MAX_INCLUDES = 8
 
 const WEEKDAYS = [
@@ -620,7 +621,7 @@ function TimeSlots({
   )
 }
 
-/** Zona de arrastre. La imagen se guarda como data URL en la capa mock (máx. 1 MB). */
+/** Zona de arrastre. La imagen se sube a RustFS (`uploadImage`) y se guarda su URL. */
 function ImageDrop({
   value,
   onChange,
@@ -631,6 +632,7 @@ function ImageDrop({
   const id = useId()
   const [dragging, setDragging] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [uploading, setUploading] = useState(false)
 
   function read(file: File | undefined) {
     if (!file) return
@@ -639,13 +641,17 @@ function ImageDrop({
       return
     }
     if (file.size > MAX_IMAGE_BYTES) {
-      setError('La imagen pesa demasiado (máximo 1 MB)')
+      setError('La imagen pesa demasiado (máximo 5 MB)')
       return
     }
     setError(null)
-    const reader = new FileReader()
-    reader.onload = () => onChange(String(reader.result))
-    reader.readAsDataURL(file)
+    const form = new FormData()
+    form.append('file', file)
+    setUploading(true)
+    uploadImage({ data: form })
+      .then(({ url }) => onChange(url))
+      .catch(() => setError('No hemos podido subir la imagen'))
+      .finally(() => setUploading(false))
   }
 
   return (
@@ -690,12 +696,15 @@ function ImageDrop({
           <ImagePlus aria-hidden className="hidden size-5 md:block" />
           <span className="md:hidden">Subir imagen del servicio</span>
           <span className="hidden md:inline">
-            Arrastra una imagen o haz clic para subirla
+            {uploading
+              ? 'Subiendo imagen…'
+              : 'Arrastra una imagen o haz clic para subirla'}
           </span>
           <input
             id={id}
             type="file"
             accept="image/*"
+            disabled={uploading}
             className="sr-only"
             aria-describedby={error ? `${id}-error` : undefined}
             onChange={(e) => read(e.target.files?.[0])}

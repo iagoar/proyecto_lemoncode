@@ -13,6 +13,7 @@ Front-end del catálogo de servicios rumbo.: **TanStack Start** (React 19 + Type
 - `npm run build` — build de producción
 - `npm run typecheck` — `tsc --noEmit`
 - `npm run generate-routes` — regenera `src/routeTree.gen.ts` (también lo hace el dev server)
+- `docker compose up -d --build` — app (3000), json-server (3001) y RustFS (S3) en el puerto 9000 (consola en 9001) con el bucket `images` de lectura pública; las imágenes de servicios se suben ahí con `src/lib/api/images.ts`
 
 Ejecuta `typecheck` antes de dar una tarea por terminada.
 
