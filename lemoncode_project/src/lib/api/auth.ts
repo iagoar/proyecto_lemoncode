@@ -1,4 +1,5 @@
 import { nowInMadrid } from '#/lib/dates'
+import { requestGoogleToken, verifyGoogleToken } from './google'
 import { http } from './http'
 import { readJson, writeJson } from './storage'
 import type { ProfileInput, User } from './types'
@@ -86,6 +87,22 @@ async function login(email: string, password: string, remember = true) {
     throw new InvalidCredentialsError()
   }
   const user = toUser(record)
+  saveSession(user, remember)
+  return user
+}
+
+/** Entra (o crea la cuenta) con Google. El email lo ha verificado el servidor. */
+async function loginWithGoogle(remember = true) {
+  const { email, name } = await verifyGoogleToken({
+    data: { accessToken: await requestGoogleToken() },
+  })
+  const normalized = normalizeEmail(email)
+  const record = await findByEmail(normalized)
+  // ponytail: contraseña aleatoria para cuentas de Google: así `register` no
+  // puede "completar" la cuenta y quedársela. Campo `provider` si hace falta distinguirlas.
+  const user = record
+    ? toUser(record)
+    : await createUser(normalized, crypto.randomUUID(), name)
   saveSession(user, remember)
   return user
 }
@@ -190,6 +207,7 @@ export function initials(name: string) {
 
 export const auth = {
   login,
+  loginWithGoogle,
   register,
   logout,
   me,

@@ -125,6 +125,7 @@ function LoginPage() {
               />
               <RegisterForm
                 onSuccess={handleRegistered}
+                onSignedIn={handleSuccess}
                 onLogin={() => setMode('login')}
               />
             </TabsContent>
